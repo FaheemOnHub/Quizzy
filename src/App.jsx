@@ -1,10 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import QuestionForm from "./Components/QuestionForm";
 const App = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [questions, setQuestions] = useState([]);
+  const clearLocalStorage = () => {
+    localStorage.removeItem("quizTitle"); // Clear data from localStorage
+    localStorage.removeItem("quizDescription");
+    localStorage.removeItem("quizQuestions");
+    setTitle("");
+    setDescription("");
+    setQuestions([]);
+    alert("Form has been cleared");
+  };
+  const [title, setTitle] = useState(() => {
+    return localStorage.getItem("quizTitle") || "";
+  });
+  const [description, setDescription] = useState(() => {
+    return localStorage.getItem("quizDescription") || "";
+  });
+  // const [questions, setQuestions] = useState([]);
+  const [questions, setQuestions] = useState(() => {
+    const savedQuestions = localStorage.getItem("quizQuestions");
+    return savedQuestions ? JSON.parse(savedQuestions) : [];
+  });
+  useEffect(() => {
+    localStorage.setItem("quizTitle", title);
+  });
+  useEffect(() => {
+    localStorage.setItem("quizDescription", description);
+  });
+  useEffect(() => {
+    localStorage.setItem("quizQuestions", JSON.stringify(questions));
+  }, [questions]);
   const addQuestion = () => {
     setQuestions([
       ...questions,
@@ -109,11 +135,18 @@ const App = () => {
               </div>
             );
           })} */}
+
           <button
             onClick={addQuestion}
             className="bg-primary p-2 text-white rounded mt-4"
           >
             Add Question
+          </button>
+          <button
+            onClick={clearLocalStorage}
+            className="bg-primary p-2 text-white rounded mt-4 ml-4"
+          >
+            Clear Form
           </button>
         </div>
       </div>

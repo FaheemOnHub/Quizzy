@@ -93,16 +93,20 @@ const QuestionForm = ({ question, index, updateQuestion }) => {
         </div>
       )}
       {question.type === "true-false" && (
-        <div>
+        <div className="">
           <input
             type="radio"
             id={`true-${index}`}
             name={`true-false-${index}`}
             value="True"
             checked={question?.options[0] === "True"}
-            onChange={() =>
-              updateQuestion(index, { ...question, options: ["True", "False"] })
-            }
+            onChange={() => {
+              handleCorrectAnswerChange("True");
+              updateQuestion(index, {
+                ...question,
+                options: ["True", "False"],
+              });
+            }}
           />
           <label htmlFor={`true-${index}`} className="">
             True
@@ -113,9 +117,13 @@ const QuestionForm = ({ question, index, updateQuestion }) => {
             name={`true-false-${index}`}
             value="False"
             checked={question?.options[0] === "False"}
-            onChange={() =>
-              updateQuestion(index, { ...question, options: ["False", "True"] })
-            }
+            onChange={() => {
+              handleCorrectAnswerChange("False");
+              updateQuestion(index, {
+                ...question,
+                options: ["False", "True"],
+              });
+            }}
           />
           <label htmlFor={`false-${index}`}>False</label>
         </div>
