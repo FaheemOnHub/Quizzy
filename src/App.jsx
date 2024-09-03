@@ -11,7 +11,8 @@ const App = () => {
       {
         questionText: "",
         type: "multiple-choice",
-        options: ["", "", "", ""],
+        options: ["", ""],
+        correctAnswer: "",
       },
     ]);
   };
@@ -42,7 +43,7 @@ const App = () => {
         </h1>
         <p className="mt-2">Quiz Maker makes it super easy to take quizzes</p>
         {/* Quiz Form */}
-        <div className="border border-white max-w-[800px] mt-10">
+        <div className="border border-white max-w-[800px] mt-10 p-4">
           <input
             type="text"
             placeholder="Quiz Title"

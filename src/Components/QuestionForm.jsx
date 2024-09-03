@@ -7,6 +7,12 @@ const QuestionForm = ({ question, index, updateQuestion }) => {
     });
     updateQuestion(index, { ...question, options: updatedOptions });
   };
+  const handleCorrectAnswerChange = (correctOption) => {
+    return updateQuestion(index, {
+      ...question,
+      correctAnswer: correctOption,
+    });
+  };
   return (
     <div className="mb-4">
       <input
@@ -38,18 +44,52 @@ const QuestionForm = ({ question, index, updateQuestion }) => {
         <div>
           {question.options.map((option, optionIndex) => {
             return (
-              <input
-                type="text"
-                key={optionIndex}
-                placeholder={`Option ${optionIndex + 1}`}
-                value={option}
-                onChange={(e) =>
-                  handleOptionChange(optionIndex, e.target.value)
-                }
-                className="w-full p-2 mb-2"
-              />
+              <div className="flex items-center mb-2 mx-auto">
+                <input
+                  type="text"
+                  key={optionIndex}
+                  placeholder={`Option ${optionIndex + 1}`}
+                  value={option}
+                  onChange={(e) =>
+                    handleOptionChange(optionIndex, e.target.value)
+                  }
+                  className="w-full p-2 mb-2"
+                />
+                <div className="flex flex-row ml-2 ">
+                  <input
+                    type="radio"
+                    name={`correct-answer-${index}`}
+                    checked={question.correctAnswer === option}
+                    onChange={() => handleCorrectAnswerChange(option)}
+                    className="ml-2"
+                  />
+                  <label className="ml-1">Correct</label>
+                </div>
+              </div>
             );
           })}
+          <button
+            onClick={() =>
+              updateQuestion(index, {
+                ...question,
+                options: [...question.options, ""],
+              })
+            }
+            className="bg-secondary p-1 text-white rounded"
+          >
+            Add Option
+          </button>
+          <button
+            onClick={() =>
+              updateQuestion(index, {
+                ...question,
+                options: [...question.options.slice(0, -1)],
+              })
+            }
+            className="bg-secondary p-1 text-white rounded ml-10"
+          >
+            Delete Option
+          </button>
         </div>
       )}
       {question.type === "true-false" && (
