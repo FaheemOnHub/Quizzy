@@ -101,10 +101,10 @@ const QuestionForm = ({ question, index, updateQuestion }) => {
             value="True"
             checked={question?.options[0] === "True"}
             onChange={() => {
-              handleCorrectAnswerChange("True");
               updateQuestion(index, {
                 ...question,
                 options: ["True", "False"],
+                correctAnswer: "True",
               });
             }}
           />
@@ -118,10 +118,10 @@ const QuestionForm = ({ question, index, updateQuestion }) => {
             value="False"
             checked={question?.options[0] === "False"}
             onChange={() => {
-              handleCorrectAnswerChange("False");
               updateQuestion(index, {
                 ...question,
                 options: ["False", "True"],
+                correctAnswer: "False",
               });
             }}
           />

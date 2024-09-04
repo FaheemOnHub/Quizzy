@@ -49,6 +49,23 @@ const App = () => {
       })
     );
   };
+  const handleSaveQuiz = async () => {
+    const quizData = { title, description, questions };
+    try {
+      const response = await fetch("http://localhost:3000/saveQuiz", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(quizData),
+      });
+      const data = await response.json();
+      console.log(data);
+      alert("Quiz saved successfully");
+    } catch (error) {
+      alert("Error saving quiz");
+    }
+  };
   return (
     <div className="">
       <div
@@ -74,6 +91,7 @@ const App = () => {
             type="text"
             placeholder="Quiz Title"
             value={title}
+            required
             onChange={(e) => {
               return setTitle(e.target.value);
             }}
@@ -147,6 +165,12 @@ const App = () => {
             className="bg-primary p-2 text-white rounded mt-4 ml-4"
           >
             Clear Form
+          </button>
+          <button
+            onClick={handleSaveQuiz}
+            className="bg-green-500 p-2 text-white rounded mt-4 ml-4"
+          >
+            Save Quiz
           </button>
         </div>
       </div>
