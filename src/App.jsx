@@ -3,7 +3,7 @@ import { useState } from "react";
 import QuestionForm from "./Components/QuestionForm";
 const App = () => {
   const clearLocalStorage = () => {
-    localStorage.removeItem("quizTitle"); // Clear data from localStorage
+    localStorage.removeItem("quizTitle");
     localStorage.removeItem("quizDescription");
     localStorage.removeItem("quizQuestions");
     setTitle("");
@@ -17,7 +17,7 @@ const App = () => {
   const [description, setDescription] = useState(() => {
     return localStorage.getItem("quizDescription") || "";
   });
-  // const [questions, setQuestions] = useState([]);
+
   const [questions, setQuestions] = useState(() => {
     const savedQuestions = localStorage.getItem("quizQuestions");
     return savedQuestions ? JSON.parse(savedQuestions) : [];
@@ -61,6 +61,7 @@ const App = () => {
       });
       const data = await response.json();
       console.log(data);
+      clearLocalStorage();
       alert("Quiz saved successfully");
     } catch (error) {
       alert("Error saving quiz");
@@ -85,7 +86,7 @@ const App = () => {
           Create awesome quiz in minutes
         </h1>
         <p className="mt-2">Quiz Maker makes it super easy to take quizzes</p>
-        {/* Quiz Form */}
+
         <div className="border border-white max-w-[800px] mt-10 p-4">
           <input
             type="text"
@@ -116,43 +117,6 @@ const App = () => {
               />
             );
           })}
-          {/* Questions List */}
-          {/* {questions.map((question, index) => {
-            return (
-              <div key={index} className="mb-4">
-                <input
-                  type="text"
-                  placeholder="Question"
-                  value={question.questionText}
-                  onChange={(e) => {
-                    return setQuestions(
-                      questions.map((q, i) => {
-                        return i === index
-                          ? { ...q, questionText: e.target.value }
-                          : q;
-                      })
-                    );
-                  }}
-                  className="w-full p-2 mb-2"
-                />
-                <select
-                  value={question.type}
-                  onChange={(e) => {
-                    return setQuestions(
-                      questions.map((q, i) => {
-                        return i === index ? { ...q, type: e.target.value } : q;
-                      })
-                    );
-                  }}
-                  className="p-2"
-                >
-                  <option value="multiple-choice">Multiple Choice</option>
-                  <option value="true-false">True/False</option>
-                  <option value="short-answer">Short Answer</option>
-                </select>
-              </div>
-            );
-          })} */}
 
           <button
             onClick={addQuestion}
