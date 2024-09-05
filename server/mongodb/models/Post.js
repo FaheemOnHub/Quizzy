@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { v4 as uuidv4 } from "uuid";
 const questionSchema = new mongoose.Schema({
   questionText: { type: String, required: true },
   type: { type: String, required: true },
@@ -6,6 +7,7 @@ const questionSchema = new mongoose.Schema({
   correctAnswer: { type: String, required: false },
 });
 const quizSchema = new mongoose.Schema({
+  quizId: { type: String, unique: true, default: uuidv4 },
   title: { type: String, required: true },
   description: { type: String, required: false },
   questions: {

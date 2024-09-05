@@ -21,7 +21,9 @@ router.route("/").post(async (req, res) => {
       }),
     });
     const savedQuiz = await newQuiz.save();
-    res.status(201).json(savedQuiz);
+    res
+      .status(200)
+      .json({ message: "Quiz saved successfully!", quizId: newQuiz.quizId });
   } catch (error) {
     res
       .status(500)
