@@ -17,6 +17,7 @@ app.get("/", (req, res) => {
 });
 app.use("/saveQuiz", saveQuiz);
 app.use("/api", fetchQuiz);
+
 //clean the db <-->
 app.get("/delete", async (req, res) => {
   try {

@@ -16,10 +16,9 @@ const resultSchema = new mongoose.Schema({
         required: true,
       },
       selectedAnswer: String,
-      correct: { type: Boolean, default: null },
     },
   ],
-  score: Number,
+  score: { type: Number, default: 0 },
   submittedAt: { type: Date, default: Date.now },
 });
 const quizSchema = new mongoose.Schema({
@@ -27,11 +26,11 @@ const quizSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: false },
   questions: {
-    type: [questionSchema],
+    type: [questionSchema], //question array
     required: true,
   },
   result: {
-    type: { resultSchema },
+    type: [resultSchema], //resultant array
   },
   // questionText: String,
   // type: String,

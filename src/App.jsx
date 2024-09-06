@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import QuestionForm from "./Components/QuestionForm";
+import QuizPage from "./Components/QuizPage";
 const App = () => {
   const clearLocalStorage = () => {
     localStorage.removeItem("quizTitle");
@@ -68,77 +70,82 @@ const App = () => {
     }
   };
   return (
-    <div className="">
-      <div
-        id="navbar"
-        className="flex flex-row justify-between items-center p-4 m-auto ml-20 mr-20"
-      >
-        <h3 className="text-4xl">quizMaker</h3>
-        <div className="text-4xl">
-          <ion-icon name="settings-outline"></ion-icon>
+    <Router>
+      <div className="">
+        <div
+          id="navbar"
+          className="flex flex-row justify-between items-center p-4 m-auto ml-20 mr-20"
+        >
+          <h3 className="text-4xl">quizMaker</h3>
+          <div className="text-4xl">
+            <ion-icon name="settings-outline"></ion-icon>
+          </div>
         </div>
-      </div>
-      <div
-        id="main"
-        className="flex flex-col justify-center items-center mt-20"
-      >
-        <h1 className="text-4xl text-blue-300">
-          Create awesome quiz in minutes
-        </h1>
-        <p className="mt-2">Quiz Maker makes it super easy to take quizzes</p>
+        <div
+          id="main"
+          className="flex flex-col justify-center items-center mt-20"
+        >
+          <h1 className="text-4xl text-blue-300">
+            Create awesome quiz in minutes
+          </h1>
+          <p className="mt-2">Quiz Maker makes it super easy to take quizzes</p>
 
-        <div className="border border-white max-w-[800px] mt-10 p-4">
-          <input
-            type="text"
-            placeholder="Quiz Title"
-            value={title}
-            required
-            onChange={(e) => {
-              return setTitle(e.target.value);
-            }}
-            className=" min-w-96 p-2 w-full mb-4 text-xl"
-          />
-          <textarea
-            name=""
-            id=""
-            placeholder="Quiz Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="min-w-96 w-full text-lg mb-4"
-          ></textarea>
-          {/* Render each question using the QuestionForm component */}
-          {questions.map((question, index) => {
-            return (
-              <QuestionForm
-                index={index}
-                key={index}
-                question={question}
-                updateQuestion={updateQuestion}
-              />
-            );
-          })}
+          <div className="border border-white max-w-[800px] mt-10 p-4">
+            <input
+              type="text"
+              placeholder="Quiz Title"
+              value={title}
+              required
+              onChange={(e) => {
+                return setTitle(e.target.value);
+              }}
+              className=" min-w-96 p-2 w-full mb-4 text-xl"
+            />
+            <textarea
+              name=""
+              id=""
+              placeholder="Quiz Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="min-w-96 w-full text-lg mb-4"
+            ></textarea>
+            {/* Render each question using the QuestionForm component */}
+            {questions.map((question, index) => {
+              return (
+                <QuestionForm
+                  index={index}
+                  key={index}
+                  question={question}
+                  updateQuestion={updateQuestion}
+                />
+              );
+            })}
 
-          <button
-            onClick={addQuestion}
-            className="bg-primary p-2 text-white rounded mt-4"
-          >
-            Add Question
-          </button>
-          <button
-            onClick={clearLocalStorage}
-            className="bg-primary p-2 text-white rounded mt-4 ml-4"
-          >
-            Clear Form
-          </button>
-          <button
-            onClick={handleSaveQuiz}
-            className="bg-green-500 p-2 text-white rounded mt-4 ml-4"
-          >
-            Save Quiz
-          </button>
+            <button
+              onClick={addQuestion}
+              className="bg-primary p-2 text-white rounded mt-4"
+            >
+              Add Question
+            </button>
+            <button
+              onClick={clearLocalStorage}
+              className="bg-primary p-2 text-white rounded mt-4 ml-4"
+            >
+              Clear Form
+            </button>
+            <button
+              onClick={handleSaveQuiz}
+              className="bg-green-500 p-2 text-white rounded mt-4 ml-4"
+            >
+              Save Quiz
+            </button>
+          </div>
         </div>
+        <Routes>
+          <Route path="/quiz/:id" element={<QuizPage />} />
+        </Routes>
       </div>
-    </div>
+    </Router>
   );
 };
 
