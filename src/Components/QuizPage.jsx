@@ -12,6 +12,25 @@ const QuizPage = () => {
       [questionIndex]: answer,
     });
   };
+  handleSubmitQuiz = async () => {
+    const Useranswers = answers;
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/quiz/:id/submit",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(Useranswers),
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(`Error in submitting the quiz,${error.message}`);
+    }
+  };
   useEffect(() => {
     fetch(`/api/quiz/${id}`).then((res) =>
       res
@@ -92,9 +111,13 @@ const QuizPage = () => {
             </div>
           )}
         </div>;
-
       })}
-      <button className="submit-quiz" onClick={()=>}></button>
+      <button
+        onClick={handleSaveQuiz}
+        className="bg-green-500 p-2 text-white rounded mt-4 ml-4"
+      >
+        Submit Quiz
+      </button>
     </div>
   );
 };

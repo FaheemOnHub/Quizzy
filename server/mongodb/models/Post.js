@@ -6,6 +6,22 @@ const questionSchema = new mongoose.Schema({
   options: { type: [String], required: true },
   correctAnswer: { type: String, required: false },
 });
+const resultSchema = new mongoose.Schema({
+  userID: { type: String, required: true },
+  answers: [
+    {
+      questionId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Question",
+        required: true,
+      },
+      selectedAnswer: String,
+      correct: { type: Boolean, default: null },
+    },
+  ],
+  score: Number,
+  submittedAt: { type: Date, default: Date.now },
+});
 const quizSchema = new mongoose.Schema({
   quizId: { type: String, unique: true, default: uuidv4 },
   title: { type: String, required: true },
@@ -13,6 +29,9 @@ const quizSchema = new mongoose.Schema({
   questions: {
     type: [questionSchema],
     required: true,
+  },
+  result: {
+    type: { resultSchema },
   },
   // questionText: String,
   // type: String,
