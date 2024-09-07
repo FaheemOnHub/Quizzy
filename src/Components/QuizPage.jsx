@@ -2,13 +2,42 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
 const QuizPage = () => {
+  const clearLocalStorage = () => {
+    localStorage.removeItem("email");
+    localStorage.removeItem("quizAnswers");
+
+    setemail("");
+    setanswers({});
+
+    alert("Form has been cleared");
+  };
   const { id } = useParams();
   const [quiz, setquiz] = useState(null);
   const [loading, setloading] = useState(true);
   const [error, seterror] = useState(null);
-  const [answers, setanswers] = useState({});
-  const [email, setemail] = useState("");
+  // const [answers, setanswers] = useState({});
+  const [answers, setanswers] = useState(() => {
+    const savedAnswers = localStorage.getItem("quizAnswers");
+    try {
+      return savedAnswers ? JSON.parse(savedAnswers) : {};
+    } catch (e) {
+      console.error("Error parsing saved quiz answers:", e);
+      return {}; // Return an empty object if parsing fails
+    }
+  });
+  // const [email, setemail] = useState("");
+  const [email, setemail] = useState(() => {
+    return localStorage.getItem("email") || "";
+  });
   const [isEmailValid, setisEmailValid] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("email", email);
+    handleEmail(email);
+  }, [email]);
+  useEffect(() => {
+    localStorage.setItem("quizAnswers", JSON.stringify(answers));
+  }, [answers]);
 
   const handleEmail = (email) => {
     setemail(email);
@@ -64,7 +93,7 @@ const QuizPage = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center mt-20 ">
-        <div class="loading loading-spinner">Loading...</div>
+        <div className="loading loading-spinner">Loading...</div>
       </div>
     );
   }
@@ -83,6 +112,7 @@ const QuizPage = () => {
           pattern=".+@example\.com"
           size="30"
           required
+          value={email}
           className="input font-montserrat font-normal"
           placeholder="Enter your Email:"
           onChange={(e) => handleEmail(e.target.value)}
@@ -108,7 +138,7 @@ const QuizPage = () => {
                   {q.options.map((option, optionIndex) => {
                     return (
                       <div key={optionIndex} className="">
-                        <label>
+                        <label className=" bg-red-50 rounded-lg text-lg">
                           <input
                             type="radio"
                             name={`question-${i}`}
@@ -124,8 +154,8 @@ const QuizPage = () => {
                 </div>
               )}
               {q.type === "true-false" && (
-                <div className="">
-                  <label className="p-4">
+                <div className="flex flex-row gap-4">
+                  <label className="p-2 bg-red-50 rounded-lg text-lg">
                     <input
                       type="radio"
                       name={`option-${i}`}
@@ -135,7 +165,7 @@ const QuizPage = () => {
                     />
                     True
                   </label>
-                  <label className="p-4">
+                  <label className="p-2 bg-red-50 rounded-lg text-lg">
                     <input
                       type="radio"
                       name={`option-${i}`}
@@ -154,6 +184,7 @@ const QuizPage = () => {
                     value={answers[i] || ""}
                     onChange={(e) => handleAnswerChange(i, e.target.value)}
                     placeholder="your answer here"
+                    className="font-montserrat p-4 input w-full"
                   />
                 </div>
               )}
@@ -165,6 +196,14 @@ const QuizPage = () => {
           >
             Submit Quiz
           </button>
+          <div>
+            <button
+              className="bg-red-500 p-2 text-white rounded mt-4 ml-4"
+              onClick={clearLocalStorage}
+            >
+              Clear Form
+            </button>
+          </div>
         </>
       )}
     </div>
