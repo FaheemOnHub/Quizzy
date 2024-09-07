@@ -16,21 +16,24 @@ router.get("/quiz/:id", async (req, res) => {
 router.post("/quiz/:id/submit", async (req, res) => {
   const { id } = req.params;
   const { answers, email } = req.body;
+  console.log(req.body.answers);
   try {
-    const quiz = await Quiz.findById(id);
+    const quiz = await Quiz.findOne({ quizId: id });
     if (!quiz) {
       return res.status(404).json({ message: "Quiz not found" });
     }
 
     //prepare the submission
     const userSubmission = {
-      email,
-      answers: answers.map((answer, index) => ({
-        //if u are returning an object literal , then it must be wrapped () -- famiNotes
-        questionId: quiz.questions[index]._id,
-        selectedOption: answer,
-      })),
+      userID: email,
+      answers: Object.entries(answers).map(
+        ([questionIndex, selectedOption]) => ({
+          questionId: quiz.questions[questionIndex]._id,
+          selectedOption: selectedOption,
+        })
+      ),
     };
+    console.log(userSubmission);
     //if the quiz contains correct answer, then evaluate
     if (quiz.questions.some((q) => q.correctAnswer)) {
       let correctCount = 0;

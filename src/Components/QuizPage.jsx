@@ -65,6 +65,7 @@ const QuizPage = () => {
       );
       const data = await response.json();
       console.log(data);
+      clearLocalStorage();
     } catch (error) {
       console.log(`Error in submitting the quiz,${error.message}`);
     }
@@ -81,7 +82,6 @@ const QuizPage = () => {
       .then((data) => {
         setquiz(data);
         setloading(false);
-        console.log(data);
       })
       .catch((err) => {
         console.error(err.message);
