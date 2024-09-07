@@ -25,18 +25,24 @@ const QuestionForm = ({ question, index, updateQuestion }) => {
             questionText: e.target.value,
           });
         }}
-        className="w-full p-2 mb-2"
+        className="w-full p-2 mb-2 font-montserrat"
       />
       <select
         value={question.type}
         onChange={(e) => {
           return updateQuestion(index, { ...question, type: e.target.value });
         }}
-        className="p-2 mb-2"
+        className="p-2 mb-2 "
       >
-        <option value="multiple-choice">Multiple Choice</option>
-        <option value="true-false">True/False</option>
-        <option value="short-answer">Short Answer</option>
+        <option value="multiple-choice" className="font-montserrat">
+          Multiple Choice
+        </option>
+        <option value="true-false" className="font-montserrat">
+          True/False
+        </option>
+        <option value="short-answer" className="font-montserrat">
+          Short Answer
+        </option>
       </select>
 
       {/* Render input fields based on question type */}
@@ -53,7 +59,7 @@ const QuestionForm = ({ question, index, updateQuestion }) => {
                   onChange={(e) =>
                     handleOptionChange(optionIndex, e.target.value)
                   }
-                  className="w-full p-2 mb-2"
+                  className="w-full p-2 mb-2 font-montserrat"
                 />
                 <div className="flex flex-row ml-2 ">
                   <input
@@ -108,7 +114,7 @@ const QuestionForm = ({ question, index, updateQuestion }) => {
               });
             }}
           />
-          <label htmlFor={`true-${index}`} className="">
+          <label htmlFor={`true-${index}`} className="p-4">
             True
           </label>
           <input
@@ -125,7 +131,9 @@ const QuestionForm = ({ question, index, updateQuestion }) => {
               });
             }}
           />
-          <label htmlFor={`false-${index}`}>False</label>
+          <label htmlFor={`false-${index}`} className="p-4">
+            False
+          </label>
         </div>
       )}
       {question.type === "short-answer" && (
