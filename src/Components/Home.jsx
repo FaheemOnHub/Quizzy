@@ -3,6 +3,7 @@ import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import QuestionForm from "./QuestionForm";
 import QuizPage from "./QuizPage";
+import Swal from "sweetalert2";
 const App = () => {
   const clearLocalStorage = () => {
     localStorage.removeItem("quizTitle");
@@ -12,7 +13,10 @@ const App = () => {
     setDescription("");
     setQuestions([]);
 
-    alert("Form has been cleared");
+    Swal.fire({
+      icon: "success",
+      title: "Form is cleared",
+    });
   };
   const [title, setTitle] = useState(() => {
     return localStorage.getItem("quizTitle") || "";
@@ -65,9 +69,15 @@ const App = () => {
       const data = await response.json();
       console.log(data);
       clearLocalStorage();
-      alert("Quiz saved successfully");
+      Swal.fire({
+        icon: "success",
+        title: "Quiz saved successfully",
+      });
     } catch (error) {
-      alert("Error saving quiz");
+      Swal.fire({
+        icon: "error",
+        title: "Failed to save",
+      });
     }
   };
   return (

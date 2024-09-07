@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-
+import Swal from "sweetalert2";
 const QuizPage = () => {
   const clearLocalStorage = () => {
     localStorage.removeItem("email");
@@ -8,8 +8,10 @@ const QuizPage = () => {
 
     setemail("");
     setanswers({});
-
-    alert("Form has been cleared");
+    Swal.fire({
+      icon: "success",
+      title: "Form is cleared",
+    });
   };
   const { id } = useParams();
   const [quiz, setquiz] = useState(null);
@@ -51,6 +53,15 @@ const QuizPage = () => {
     });
   };
   const handleSubmitQuiz = async () => {
+    const unanswered = quiz.questions.filter((curr, index) => !answers[index]);
+    if (unanswered.length > 0) {
+      Swal.fire({
+        icon: "error",
+        title: "incomplete quiz",
+        text: "Please answer all the questions before submitting the quiz.",
+      });
+      return;
+    }
     const submitData = { answers, email };
     try {
       const response = await fetch(

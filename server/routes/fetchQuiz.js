@@ -29,22 +29,23 @@ router.post("/quiz/:id/submit", async (req, res) => {
       answers: Object.entries(answers).map(
         ([questionIndex, selectedOption]) => ({
           questionId: quiz.questions[questionIndex]._id,
-          selectedOption: selectedOption,
+          selectedAnswer: selectedOption,
         })
       ),
     };
-    console.log(userSubmission);
+
     //if the quiz contains correct answer, then evaluate
     if (quiz.questions.some((q) => q.correctAnswer)) {
       let correctCount = 0;
       userSubmission.answers.forEach((submittedAnswer, index) => {
         const correctAnswer = quiz.questions[index].correctAnswer;
-        if (submittedAnswer.selectedOption === correctAnswer) {
+        if (submittedAnswer.selectedAnswer === correctAnswer) {
           correctCount++;
         }
       });
       userSubmission.score = correctCount;
     }
+    console.log(userSubmission);
     quiz.result.push(userSubmission);
     await quiz.save();
 

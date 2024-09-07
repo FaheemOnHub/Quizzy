@@ -15,7 +15,7 @@ const resultSchema = new mongoose.Schema({
         ref: "Question",
         required: true,
       },
-      selectedAnswer: String,
+      selectedAnswer: { type: String, required: true },
     },
   ],
   score: { type: Number, default: 0 },
