@@ -23,6 +23,7 @@ const resultSchema = new mongoose.Schema({
 });
 const quizSchema = new mongoose.Schema({
   quizId: { type: String, unique: true, default: uuidv4 },
+  ownerEmail: { type: String, require: true },
   title: { type: String, required: true },
   description: { type: String, required: false },
   questions: {

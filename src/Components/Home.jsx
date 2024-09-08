@@ -9,8 +9,10 @@ const App = () => {
     localStorage.removeItem("quizTitle");
     localStorage.removeItem("quizDescription");
     localStorage.removeItem("quizQuestions");
+    localStorage.removeItem("ownerEmail");
     setTitle("");
     setDescription("");
+    setownerEmail("");
     setQuestions([]);
 
     Swal.fire({
@@ -18,6 +20,10 @@ const App = () => {
       title: "Form is cleared",
     });
   };
+  const [isEmailValid, setisEmailValid] = useState(false);
+  const [ownerEmail, setownerEmail] = useState(() => {
+    return localStorage.getItem("ownerEmail") || "";
+  });
   const [title, setTitle] = useState(() => {
     return localStorage.getItem("quizTitle") || "";
   });
@@ -30,6 +36,10 @@ const App = () => {
     return savedQuestions ? JSON.parse(savedQuestions) : [];
   });
   useEffect(() => {
+    localStorage.setItem("ownerEmail", ownerEmail);
+    handleEmail(ownerEmail);
+  }, [ownerEmail]);
+  useEffect(() => {
     localStorage.setItem("quizTitle", title);
   });
   useEffect(() => {
@@ -38,6 +48,10 @@ const App = () => {
   useEffect(() => {
     localStorage.setItem("quizQuestions", JSON.stringify(questions));
   }, [questions]);
+  const handleEmail = (email) => {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    setisEmailValid(emailPattern.test(email));
+  };
   const addQuestion = () => {
     setQuestions([
       ...questions,
@@ -57,7 +71,28 @@ const App = () => {
     );
   };
   const handleSaveQuiz = async () => {
-    const quizData = { title, description, questions };
+    if (!isEmailValid) {
+      Swal.fire({
+        icon: "warning",
+        title: "Kindly enter a valid email",
+      });
+      return;
+    }
+    if (title.length <= 2) {
+      Swal.fire({
+        icon: "warning",
+        title: "Quiz Title is required",
+      });
+      return;
+    }
+    if (questions.length <= 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "Atleast add 1 Question to the Quiz",
+      });
+      return;
+    }
+    const quizData = { ownerEmail, title, description, questions };
     try {
       const response = await fetch("http://localhost:3000/saveQuiz", {
         method: "POST",
@@ -82,15 +117,6 @@ const App = () => {
   };
   return (
     <div className="">
-      {/* <div
-        id="navbar"
-        className="flex flex-row justify-between items-center p-4 m-auto ml-20 mr-20"
-      >
-        <h3 className="text-4xl">quizMaker</h3>
-        <div className="text-4xl">
-          <ion-icon name="settings-outline"></ion-icon>
-        </div>
-      </div> */}
       <div
         id="main"
         className="flex flex-col justify-center items-center mt-20"
@@ -102,7 +128,23 @@ const App = () => {
           Quiz Maker makes it super easy to take quizzes
         </p>
 
-        <div className="border border-white max-w-[800px] mt-10 p-4">
+        <div className="border border-white max-w-[800px] mt-10 p-4 rounded-lg">
+          <input
+            type="email"
+            id="email"
+            pattern=".+@example\.com"
+            size="30"
+            required
+            value={ownerEmail}
+            className="input font-montserrat font-normal mb-4 border border-black mx-auto"
+            placeholder="Enter your Email:"
+            onChange={(e) => setownerEmail(e.target.value)}
+          />
+          {!isEmailValid && ownerEmail && (
+            <p className="text-blue-500 m-4 font-montserrat alert">
+              Please enter a valid email
+            </p>
+          )}
           <input
             type="text"
             placeholder="Quiz Title"
@@ -111,7 +153,7 @@ const App = () => {
             onChange={(e) => {
               return setTitle(e.target.value);
             }}
-            className=" min-w-96 p-2 w-full mb-4 text-xl font-montserrat"
+            className=" min-w-96 p-2 w-full mb-4 text-xl font-montserrat rounded-lg"
           />
           <textarea
             name=""
@@ -119,7 +161,7 @@ const App = () => {
             placeholder="Quiz Description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="min-w-96 w-full text-lg mb-4 font-montserrat resize-none"
+            className="min-w-96 p-2 w-full text-lg mb-4 font-montserrat resize-none rounded-lg"
           ></textarea>
           {/* Render each question using the QuestionForm component */}
           {questions.map((question, index) => {

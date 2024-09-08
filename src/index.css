@@ -1,3 +1,68 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.sidebar {
+  width: 250px;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  height: 100vh;
+  position: fixed;
+}
+
+.nav-links li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.nav-links li:hover {
+  background-color: #e0e0e0;
+}
+
+.content {
+  margin-left: 250px;
+  padding: 2rem;
+}
+
+.quiz-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.quiz-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.quiz-card:hover {
+  transform: translateY(-5px);
+}
+
+.quiz-card h3 {
+  margin: 0 0 10px;
+}
+
+.quiz-card p {
+  font-size: 14px;
+  color: #757575;
+}
+
+.quiz-card button {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.quiz-card button:hover {
+  background-color: #45a049;
+}

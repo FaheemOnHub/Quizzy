@@ -109,7 +109,11 @@ const QuizPage = () => {
     );
   }
   if (error) {
-    return <p>Error:{error}</p>;
+    return (
+      <div className="flex justify-center items-center mt-20 ">
+        <p>Error:{error}</p>;
+      </div>
+    );
   }
   return (
     <div className="flex flex-col justify-center items-center border border-white rounded-xl max-w-[600px] xl:max-w-[900px]  mx-auto gap-4 p-4 m-10  bg-white text-black">

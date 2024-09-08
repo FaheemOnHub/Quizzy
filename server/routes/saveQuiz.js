@@ -7,8 +7,9 @@ router.route("/").get(async (req, res) => {
 });
 router.route("/").post(async (req, res) => {
   try {
-    const { title, description, questions } = req.body;
+    const { ownerEmail, title, description, questions } = req.body;
     const newQuiz = new Quiz({
+      ownerEmail,
       title,
       description,
       questions: questions.map((q, i) => {

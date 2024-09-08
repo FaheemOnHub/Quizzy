@@ -61,15 +61,18 @@ const QuestionForm = ({ question, index, updateQuestion }) => {
                   }
                   className="w-full p-2 mb-2 font-montserrat"
                 />
-                <div className="flex flex-row ml-2 ">
-                  <input
-                    type="radio"
-                    name={`correct-answer-${index}`}
-                    checked={question.correctAnswer === option}
-                    onChange={() => handleCorrectAnswerChange(option)}
-                    className="ml-2"
-                  />
-                  <label className="ml-1">Correct</label>
+                <div className="flex items-center justify-center">
+                  <label className="ml-2 text-sm font-medium font-mon text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 min-w-[100px] rounded-lg ">
+                    <input
+                      type="radio"
+                      name={`correct-answer-${index}`}
+                      id={`correct-answer-${index}`}
+                      checked={question.correctAnswer === option}
+                      onChange={() => handleCorrectAnswerChange(option)}
+                      className="w-6"
+                    />
+                    Correct
+                  </label>
                 </div>
               </div>
             );
