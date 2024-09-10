@@ -6,7 +6,7 @@ const adminDashboard = () => {
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [adminEmail, setAdminEmail] = useState("thefaheemiquasar@gmail.com");
+  const [adminEmail, setAdminEmail] = useState("fami@gmail.com");
 
   const [selectedQuizId, setSelectedQuizId] = useState(null);
   const [quizData, setQuizData] = useState({});
@@ -39,7 +39,7 @@ const adminDashboard = () => {
         }
         const data = await response.json();
         setQuizzes(data);
-        console.log(data);
+        // console.log(data);
         setLoading(false);
       } catch (error) {
         setError(error.message);

@@ -20,6 +20,35 @@ const QuizResponse = ({ quizId, quizData, onBack }) => {
           Back to All Responses
         </button>
         <h1 className="font-montserrat text-lg underline">{`User ID: ${responseData.userID}`}</h1>
+        {quizData.questions.map((q, i) => {
+          return (
+            <div className="border border-blue-500 rounded-lg p-4 mb-4">
+              <h2 className="font-montserrat">
+                {i + 1}. {q.questionText}
+              </h2>
+              <div className="flex justify-between md:flex-row flex-col">
+                {responseData.answers[i].selectedAnswer === q.correctAnswer ? (
+                  <div className="text-green-500 flex items-center">
+                    <span className="material-icons mr-2">✅</span>
+                    <p>{`Answer Marked: ${responseData.answers[i].selectedAnswer}`}</p>
+                  </div>
+                ) : (
+                  <div className="text-red-500 flex items-center">
+                    <span className="material-icons mr-2">❌</span>
+                    <p>{`Answer Marked: ${responseData.answers[i].selectedAnswer}`}</p>
+                  </div>
+                )}
+                <div>
+                  {q.correctAnswer && (
+                    <div className="text-green-500 flex items-center ml-4 mt-4">
+                      <p>{`Correct Answer: ${q.correctAnswer}`}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     );
   }
