@@ -30,10 +30,13 @@ router.post("/quiz/:id/submit", async (req, res) => {
         ([questionIndex, selectedOption]) => ({
           questionId: quiz.questions[questionIndex]._id,
           selectedAnswer: selectedOption,
+
           isCorrect:
-            selectedOption === quiz.questions[questionIndex].correctAnswer
-              ? "true"
-              : "false",
+            quiz.questions[questionIndex].correctAnswer !== ""
+              ? selectedOption === quiz.questions[questionIndex].correctAnswer
+                ? "true"
+                : "false"
+              : "",
         })
       ),
     };

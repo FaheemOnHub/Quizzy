@@ -106,6 +106,19 @@ const QuizResponse = ({ quizId, quizData, onBack, onUpdateQuizData }) => {
                         <option value="incorrect">Incorrect</option>
                       </select>
                     </div>
+                    <div className="mt-2">
+                      {responseData.answers[i].isCorrect !== "" ? (
+                        <p>
+                          {responseData.answers[i].isCorrect
+                            ? "Marked as Correct ✅"
+                            : "Marked as incorrect ❌"}
+                        </p>
+                      ) : (
+                        <p className="font-montserrat text-yellow-500">
+                          No marking yet❓
+                        </p>
+                      )}
+                    </div>
                   </div>
                 )}
               </div>
