@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import QuizPage from "../Components/QuizPage";
 import QuizResponse from "../Components/QuizResponse";
 
-const adminDashboard = () => {
+const AdminDashboard = () => {
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,6 +10,13 @@ const adminDashboard = () => {
 
   const [selectedQuizId, setSelectedQuizId] = useState(null);
   const [quizData, setQuizData] = useState({});
+  const updateQuizData = (updatedQuiz) => {
+    try {
+      setQuizData(updatedQuiz);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleviewResponse = async (quizID, quiz) => {
     console.log(quizID, quiz);
     setSelectedQuizId({ quizID });
@@ -104,6 +111,7 @@ const adminDashboard = () => {
             quizId={selectedQuizId}
             quizData={quizData}
             onBack={() => setSelectedQuizId(null)}
+            onUpdateQuizData={updateQuizData}
           />
         )}
       </div>
@@ -111,4 +119,4 @@ const adminDashboard = () => {
   );
 };
 
-export default adminDashboard;
+export default AdminDashboard;

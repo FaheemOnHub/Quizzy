@@ -16,6 +16,7 @@ const resultSchema = new mongoose.Schema({
         required: true,
       },
       selectedAnswer: { type: String, required: true },
+      isCorrect: { type: Boolean, default: null },
     },
   ],
   score: { type: Number, default: 0 },

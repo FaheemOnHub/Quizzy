@@ -5,6 +5,22 @@ const router = express.Router();
 router.route("/").get(async (req, res) => {
   res.status(201).json("hey");
 });
+router.route("/:id").patch(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const task = await Quiz.findOneAndUpdate({ _id: id }, req.body, {
+      new: true,
+    });
+    res.status(200).json({
+      status: "Updated",
+      quizData: task,
+    });
+  } catch (error) {
+    res.status(404).json({
+      error,
+    });
+  }
+});
 router.route("/").post(async (req, res) => {
   try {
     const { ownerEmail, title, description, questions } = req.body;
