@@ -95,7 +95,7 @@ const QuizResponse = ({ quizId, quizData, onBack, onUpdateQuizData }) => {
                       <select
                         className="p-2 border border-gray-400 rounded-lg"
                         value={
-                          responseData.answers[i].isCorrect
+                          responseData.answers[i].isCorrect === true
                             ? "correct"
                             : "incorrect"
                         }
@@ -114,7 +114,7 @@ const QuizResponse = ({ quizId, quizData, onBack, onUpdateQuizData }) => {
                     <div className="mt-2">
                       {responseData.answers[i].isCorrect !== "" ? (
                         <p>
-                          {responseData.answers[i].isCorrect
+                          {responseData.answers[i].isCorrect === true
                             ? "Marked as Correct ✅"
                             : "Marked as incorrect ❌"}
                         </p>
