@@ -8,6 +8,11 @@ const QuizResponse = ({ quizId, quizData, onBack, onUpdateQuizData }) => {
     const updatedQuizData = { ...quizData };
     const updatedResponse = { ...quizData.result[responseIndex] };
     updatedResponse.answers[questionIndex].isCorrect = value === "correct";
+    if (updatedResponse.answers[questionIndex].isCorrect === true) {
+      updatedResponse.score += 1;
+    } else {
+      updatedResponse.score -= 1;
+    }
     updatedQuizData.result[responseIndex] = updatedResponse;
     // quizData.result[responseIndex] = updatedResponse;
     onUpdateQuizData(updatedQuizData);
