@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import QuizPage from "../Components/QuizPage";
 import QuizResponse from "../Components/QuizResponse";
+import EditQuiz from "../Components/EditQuiz";
 
 const AdminDashboard = () => {
+  const [isEditing, setIsEditing] = useState(false);
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,12 +12,20 @@ const AdminDashboard = () => {
 
   const [selectedQuizId, setSelectedQuizId] = useState(null);
   const [quizData, setQuizData] = useState({});
+  const handleEditResponse = (quiz, quizID) => {
+    setQuizData(quiz);
+    setSelectedQuizId({ quizID });
+    setIsEditing(true);
+  };
   const updateQuizData = (updatedQuiz) => {
     try {
       setQuizData(updatedQuiz);
     } catch (error) {
       console.log(error);
     }
+  };
+  const handleSaveQuiz = async (updatedQuiz) => {
+    setIsEditing(false);
   };
   const handleviewResponse = async (quizID, quiz) => {
     console.log(quizID, quiz);
@@ -95,6 +105,13 @@ const AdminDashboard = () => {
                     <h3 className="font-montserrat text-lg">{quiz.title}</h3>
                     <p className="font-montserrat">{`${quiz.result.length} respondants`}</p>
                     <p className="font-montserrat">Created on: 2024-09-01</p>
+
+                    <button
+                      onClick={() => handleEditResponse(quiz, quiz._id)}
+                      className="p-2 mt-2 mb-2 mr-2"
+                    >
+                      Edit Quiz
+                    </button>
                     <button
                       className="font-montserrat p-2 mt-2 "
                       onClick={() => handleviewResponse(quiz._id, quiz)}
@@ -106,6 +123,12 @@ const AdminDashboard = () => {
               })}
             </div>
           </>
+        ) : isEditing ? (
+          <EditQuiz
+            quizData={quizData}
+            onSave={handleSaveQuiz}
+            onCancel={() => (setIsEditing(false), setSelectedQuizId(null))}
+          />
         ) : (
           <QuizResponse
             quizId={selectedQuizId}
