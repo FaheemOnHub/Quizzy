@@ -27,6 +27,12 @@ const EditQuiz = ({ quizData, onSave, onCancel }) => {
     updatedQuestion[index].options = updatedOption;
     setQuestions(updatedQuestion);
   };
+  const updateQuestion = (index, updatedQuestion) => {
+    const updatedQuestions = [...questions];
+    updatedQuestions[index] = updatedQuestion;
+    setQuestions(updatedQuestions);
+  };
+
   return (
     <div className="edit-quiz-container quiz-card">
       <h2 className="font-montserrat text-xl">Edit Quiz</h2>
@@ -97,7 +103,7 @@ const EditQuiz = ({ quizData, onSave, onCancel }) => {
                             name={`correct-answer-${index}`}
                             id={`correct-answer-${index}`}
                             checked={q.correctAnswer === option}
-                            onChange={() => handleCorrectAnswerChange(option)}
+                            onChange={() => handleAnswerChange(index, option)}
                             className="w-6"
                           />
                           Correct
@@ -109,8 +115,8 @@ const EditQuiz = ({ quizData, onSave, onCancel }) => {
                 <button
                   onClick={() =>
                     updateQuestion(index, {
-                      ...question,
-                      options: [...question.options, ""],
+                      ...q,
+                      options: [...q.options, ""],
                     })
                   }
                   className="bg-secondary p-1 text-white rounded"
@@ -120,8 +126,8 @@ const EditQuiz = ({ quizData, onSave, onCancel }) => {
                 <button
                   onClick={() =>
                     updateQuestion(index, {
-                      ...question,
-                      options: [...question.options.slice(0, -1)],
+                      ...q,
+                      options: [...q.options.slice(0, -1)],
                     })
                   }
                   className="bg-secondary p-1 text-white rounded ml-10"
@@ -140,7 +146,7 @@ const EditQuiz = ({ quizData, onSave, onCancel }) => {
                   checked={q?.options[0] === "True"}
                   onChange={() => {
                     updateQuestion(index, {
-                      ...question,
+                      ...q,
                       options: ["True", "False"],
                       correctAnswer: "True",
                     });
@@ -157,7 +163,7 @@ const EditQuiz = ({ quizData, onSave, onCancel }) => {
                   checked={q?.options[0] === "False"}
                   onChange={() => {
                     updateQuestion(index, {
-                      ...question,
+                      ...q,
                       options: ["False", "True"],
                       correctAnswer: "False",
                     });
@@ -175,7 +181,7 @@ const EditQuiz = ({ quizData, onSave, onCancel }) => {
                 value={q.options[0]}
                 onChange={(e) =>
                   updateQuestion(index, {
-                    ...question,
+                    ...q,
                     options: [e.target.value],
                   })
                 }
