@@ -19,6 +19,14 @@ const EditQuiz = ({ quizData, onSave, onCancel }) => {
     updatedQuestion[index].correctAnswer = newAnswer;
     setQuestions(updatedQuestion);
   };
+  const handleOptionChange = (optionIndex, newOption, question, index) => {
+    const updatedOption = question.options.map((option, index) => {
+      return index === optionIndex ? newOption : option;
+    });
+    const updatedQuestion = [...questions];
+    updatedQuestion[index].options = updatedOption;
+    setQuestions(updatedQuestion);
+  };
   return (
     <div className="edit-quiz-container quiz-card">
       <h2 className="font-montserrat text-xl">Edit Quiz</h2>
@@ -49,7 +57,7 @@ const EditQuiz = ({ quizData, onSave, onCancel }) => {
       <h3 className="font-montserrat text-xl">Edit Questions</h3>
       {questions.map((q, index) => {
         return (
-          <div className="flex flex-col mt-2 mb-2">
+          <div className="flex flex-col mt-2 mb-2" key={index}>
             <input
               type="text"
               value={q.questionText}
@@ -57,7 +65,7 @@ const EditQuiz = ({ quizData, onSave, onCancel }) => {
               className="w-full p-4 mb-2 font-montserrat "
             />
             {q.type == "multiple-choice" && (
-              <div key={index}>
+              <div>
                 {q.options.map((option, optionIndex) => {
                   return (
                     <div
@@ -73,7 +81,12 @@ const EditQuiz = ({ quizData, onSave, onCancel }) => {
                         placeholder={`Option ${optionIndex + 1}`}
                         value={option}
                         onChange={(e) =>
-                          handleOptionChange(optionIndex, e.target.value)
+                          handleOptionChange(
+                            optionIndex,
+                            e.target.value,
+                            q,
+                            index
+                          )
                         }
                         className="w-full p-2 mb-2 font-montserrat"
                       />
