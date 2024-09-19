@@ -1,23 +1,37 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import QuestionForm from "./QuestionForm";
-const EditQuiz = ({ quizData, onSave, onCancel }) => {
+import Swal from "sweetalert2";
+const EditQuiz = ({ quizData: initialData, onSave, onCancel }) => {
+  const [quizData, setdata] = useState(initialData || {});
   const [title, settitle] = useState(quizData.title || "");
   const [description, setdescription] = useState(quizData.description || "");
   const [questions, setQuestions] = useState(quizData.questions || []);
 
   const handleTitleChange = (newTitle) => {
+    setdata((data) => ({
+      ...data,
+      title: newTitle,
+    }));
     settitle(newTitle);
   };
   const handleQuestionChange = (index, newQuestion) => {
     const updatedQuestion = [...questions];
     updatedQuestion[index].questionText = newQuestion;
     setQuestions(updatedQuestion);
+    setdata((data) => ({
+      ...data,
+      questions: updatedQuestion,
+    }));
   };
   const handleAnswerChange = (index, newAnswer) => {
     const updatedQuestion = [...questions];
     updatedQuestion[index].correctAnswer = newAnswer;
     setQuestions(updatedQuestion);
+    setdata((data) => ({
+      ...data,
+      questions: updatedQuestion,
+    }));
   };
   const handleOptionChange = (optionIndex, newOption, question, index) => {
     const updatedOption = question.options.map((option, index) => {
@@ -26,22 +40,64 @@ const EditQuiz = ({ quizData, onSave, onCancel }) => {
     const updatedQuestion = [...questions];
     updatedQuestion[index].options = updatedOption;
     setQuestions(updatedQuestion);
+    setdata((data) => ({
+      ...data,
+      questions: updatedQuestion,
+    }));
   };
   const updateQuestion = (index, updatedQuestion) => {
     const updatedQuestions = [...questions];
     updatedQuestions[index] = updatedQuestion;
     setQuestions(updatedQuestions);
+    setdata((data) => ({
+      ...data,
+      questions: updatedQuestions,
+    }));
+  };
+
+  const saveQuiz = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/saveQuiz/updateQuiz/${quizData._id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(quizData),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to save the quiz");
+      }
+      const result = await response.json();
+      Swal.fire({
+        title: "Success!",
+        text: "Quiz saved successfully",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+      await onSave(quizData);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div className="edit-quiz-container quiz-card">
       <h2 className="font-montserrat text-xl">Edit Quiz</h2>
-      <button
-        onClick={() => onCancel()}
-        className=" border rounded-lg shadow-lg p-2 mt-2"
-      >
-        Back
-      </button>
+      <div className="flex flex-row">
+        <button
+          onClick={() => onCancel()}
+          className=" border rounded-lg shadow-lg p-2 mt-2"
+        >
+          Back
+        </button>
+        <button onClick={saveQuiz} className="btn-primary mt-4 ml-4 p-2">
+          Save Quiz
+        </button>
+      </div>
+
       <input
         type="text"
         placeholder="Quiz Title"
@@ -70,7 +126,7 @@ const EditQuiz = ({ quizData, onSave, onCancel }) => {
               onChange={(e) => handleQuestionChange(index, e.target.value)}
               className="w-full p-4 mb-2 font-montserrat "
             />
-            {q.type == "multiple-choice" && (
+            {q.type === "multiple-choice" && (
               <div>
                 {q.options.map((option, optionIndex) => {
                   return (

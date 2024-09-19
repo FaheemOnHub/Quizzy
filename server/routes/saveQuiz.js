@@ -5,6 +5,34 @@ const router = express.Router();
 router.route("/").get(async (req, res) => {
   res.status(201).json("hey");
 });
+router.route("/updateQuiz/:id").patch(async (req, res) => {
+  const { id } = req.params;
+  try {
+    const quiz = await Quiz.findById(id);
+    console.log(quiz);
+    if (!quiz) {
+      return res.status(404).json({
+        status: "Error",
+        message: "Quiz not found",
+      });
+    }
+
+    const updatedQuiz = await Quiz.findOneAndUpdate({ _id: id }, req.body, {
+      new: true, // Returns the updated document
+    });
+
+    res.status(200).json({
+      status: "Updated",
+      updateQuiz: updatedQuiz,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "Error",
+      message: "Failed to update quiz",
+      error: error.message,
+    });
+  }
+});
 router.route("/:id").patch(async (req, res) => {
   try {
     const { id } = req.params;

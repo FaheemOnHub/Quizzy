@@ -145,7 +145,7 @@ const QuizResponse = ({ quizId, quizData, onBack, onUpdateQuizData }) => {
         {quizData.title}-Respondents
       </h1>
       <ul className="list-disc pl-6 p-10">
-        {quizData.result.map((response, index) => {
+        {quizData?.result.map((response, index) => {
           return (
             <div className="" key={index}>
               <li

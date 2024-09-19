@@ -25,6 +25,7 @@ const AdminDashboard = () => {
     }
   };
   const handleSaveQuiz = async (updatedQuiz) => {
+    setQuizData(updatedQuiz);
     setIsEditing(false);
   };
   const handleviewResponse = async (quizID, quiz) => {
