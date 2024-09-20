@@ -71,13 +71,14 @@ const EditQuiz = ({ quizData: initialData, onSave, onCancel }) => {
         throw new Error("Failed to save the quiz");
       }
       const result = await response.json();
+      console.log(result.updateQuiz);
       Swal.fire({
         title: "Success!",
         text: "Quiz saved successfully",
         icon: "success",
         confirmButtonText: "OK",
       });
-      await onSave(quizData);
+      await onSave(result.updateQuiz);
     } catch (error) {
       console.log(error);
     }

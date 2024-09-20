@@ -4,6 +4,7 @@ import QuizResponse from "../Components/QuizResponse";
 import EditQuiz from "../Components/EditQuiz";
 
 const AdminDashboard = () => {
+  const [transpoter, setranspoter] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,6 +17,7 @@ const AdminDashboard = () => {
     setQuizData(quiz);
     setSelectedQuizId({ quizID });
     setIsEditing(true);
+    setranspoter(true);
   };
   const updateQuizData = (updatedQuiz) => {
     try {
@@ -30,6 +32,7 @@ const AdminDashboard = () => {
   };
   const handleviewResponse = async (quizID, quiz) => {
     console.log(quizID, quiz);
+    setranspoter(false);
     setSelectedQuizId({ quizID });
 
     setQuizData(quiz);
@@ -65,7 +68,7 @@ const AdminDashboard = () => {
       }
     };
     fetchQuizzes();
-  }, [adminEmail]);
+  }, [adminEmail, quizData]);
   return (
     <div className="main">
       {/* sidebar */}
@@ -124,19 +127,21 @@ const AdminDashboard = () => {
               })}
             </div>
           </>
-        ) : isEditing ? (
+        ) : isEditing && transpoter ? (
           <EditQuiz
             quizData={quizData}
             onSave={handleSaveQuiz}
             onCancel={() => (setIsEditing(false), setSelectedQuizId(null))}
           />
-        ) : (
+        ) : !transpoter ? (
           <QuizResponse
             quizId={selectedQuizId}
             quizData={quizData}
             onBack={() => setSelectedQuizId(null)}
             onUpdateQuizData={updateQuizData}
           />
+        ) : (
+          <></>
         )}
       </div>
     </div>
