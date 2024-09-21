@@ -134,29 +134,29 @@ const QuizResponse = ({ quizId, quizData, onBack, onUpdateQuizData }) => {
     );
   }
   return (
-    <div className="response-list">
+    <div className="response-list m-4">
       <button
-        className=" text-white p-4 rounded-lg mb-4 bg-primary cursor-pointer transition-transform duration-300 hover:scale-110"
+        className=" text-white p-4 rounded-lg mb-4 bg-primary cursor-pointer transition-transform duration-300 hover:scale-110 text-xs"
         onClick={onBack}
       >
         Back to All Quizzes
       </button>
-      <h1 className="text-2xl font-montserrat mb-4">
-        {quizData.title}-Respondents
+      <h1 className="lg:text-2xl font-montserrat mb-4">
+        <span className="text-blue-500 ">{quizData.title}</span> : Respondents
       </h1>
-      <ul className="list-disc pl-6 p-10">
+      <ul className="list-disc border  max-w-[800px] mx-auto rounded-lg border-8">
         {quizData?.result.map((response, index) => {
           return (
-            <div className="" key={index}>
+            <div className=" " key={index}>
               <li
                 key={index}
-                className="mb-2 flex flex-row justify-between p-2"
+                className="mb-2 flex flex-row justify-between p-2 flex-wrap gap-4"
               >
                 <h2 className="text-xl font-montserrat">{`${index + 1}. ${
                   response.userID
                 }`}</h2>
                 <button
-                  className=" text-white p-4 rounded-lg mb-4 bg-secondary cursor-pointer transition-transform duration-300 hover:scale-110"
+                  className=" text-white p-1 rounded-lg mb-4 bg-green-500 cursor-pointer transition-transform duration-300 hover:scale-110"
                   onClick={() => setSelectedResponse(index)}
                 >
                   Check Result

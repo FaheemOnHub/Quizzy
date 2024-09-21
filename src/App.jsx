@@ -4,18 +4,27 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./Components/Home.jsx";
 import QuizPage from "./Components/QuizPage";
 import AdminDashboard from "./Pages/adminDashboard.jsx";
+import Swal from "sweetalert2";
+function handelSettings() {
+  Swal.fire({
+    icon: "warning",
+    title: "working on it 👨🏼‍🔧",
+  });
+}
 const App = () => {
   return (
     <Router>
       <div id="main">
         <div
           id="navbar"
-          className="flex flex-row justify-between items-center p-4 m-auto ml-20 mr-20"
+          className="flex flex-row justify-between items-center p-3 m-auto  lg:ml-20 lg:mr-20  "
         >
           <a href="/">
-            <h3 className="text-4xl font-montserrat text-primary">qu🤯zzy</h3>
+            <h3 className="lg:text-4xl text-xl font-montserrat text-primary">
+              qu🤯zzy
+            </h3>
           </a>
-          <div className="text-4xl">
+          <div className="lg:text-4xl text-xl" onClick={() => handelSettings()}>
             <ion-icon name="settings-outline"></ion-icon>
           </div>
         </div>

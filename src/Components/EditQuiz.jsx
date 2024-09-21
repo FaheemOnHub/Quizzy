@@ -107,7 +107,7 @@ const EditQuiz = ({ quizData: initialData, onSave, onCancel }) => {
         onChange={(e) => {
           return handleTitleChange(e.target.value);
         }}
-        className=" min-w-96 p-2 w-full mb-4 mt-4 text-xl font-montserrat rounded-lg input"
+        className=" lg:min-w-96 p-2 w-full mb-4 mt-4 text-xl font-montserrat rounded-lg input"
       />
       <textarea
         name=""
@@ -115,7 +115,7 @@ const EditQuiz = ({ quizData: initialData, onSave, onCancel }) => {
         placeholder="Quiz Description"
         value={description}
         onChange={(e) => setdescription(e.target.value)}
-        className="min-w-96 p-2 w-full text-lg mb-4 font-montserrat resize-none rounded-lg input"
+        className="lg:min-w-96 p-2 w-full text-lg mb-4 font-montserrat resize-none rounded-lg input"
       />
       <h3 className="font-montserrat text-xl">Edit Questions</h3>
       {questions.map((q, index) => {

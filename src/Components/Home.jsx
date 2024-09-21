@@ -121,14 +121,14 @@ const App = () => {
         id="main"
         className="flex flex-col justify-center items-center mt-20"
       >
-        <h1 className="text-4xl text-blue-300 font-montserrat">
+        <h1 className="lg:text-4xl text-xl text-blue-300 font-montserrat p-2">
           Create awesome quiz in minutes
         </h1>
-        <p className="mt-2 font-montserrat">
-          Quiz Maker makes it super easy to take quizzes
+        <p className="mt-2 font-montserrat p-2 ">
+          qu🤯zzy makes it super easy to take quizzes
         </p>
 
-        <div className="border border-white max-w-[800px] mt-10 p-4 rounded-lg">
+        <div className="border border-white lg:max-w-[800px] mt-10 p-2 rounded-lg ">
           <input
             type="email"
             id="email"
@@ -141,7 +141,7 @@ const App = () => {
             onChange={(e) => setownerEmail(e.target.value)}
           />
           {!isEmailValid && ownerEmail && (
-            <p className="text-blue-500 m-4 font-montserrat alert">
+            <p className="text-blue-500 m-1 lg:mg-4 font-montserrat alert">
               Please enter a valid email
             </p>
           )}
@@ -153,7 +153,7 @@ const App = () => {
             onChange={(e) => {
               return setTitle(e.target.value);
             }}
-            className=" min-w-96 p-2 w-full mb-4 text-xl font-montserrat rounded-lg"
+            className=" lg:min-w-96 p-2 w-full mb-4 text-xl font-montserrat rounded-lg"
           />
           <textarea
             name=""
@@ -161,7 +161,7 @@ const App = () => {
             placeholder="Quiz Description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="min-w-96 p-2 w-full text-lg mb-4 font-montserrat resize-none rounded-lg"
+            className="lg:min-w-96 p-2 w-full text-lg mb-4 font-montserrat resize-none rounded-lg"
           ></textarea>
           {/* Render each question using the QuestionForm component */}
           {questions.map((question, index) => {
@@ -189,7 +189,8 @@ const App = () => {
           </button>
           <button
             onClick={handleSaveQuiz}
-            className="bg-green-500 p-2 text-white rounded mt-4 ml-4 font-montserrat"
+            className="bg-green-500 p-2 text-white rounded mt-4 ml-4 font-montserrat transform rotate-3
+            "
           >
             Save Quiz
           </button>

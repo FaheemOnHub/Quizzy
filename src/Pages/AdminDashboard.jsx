@@ -38,14 +38,7 @@ const AdminDashboard = () => {
 
     setQuizData(quiz);
   };
-  // useEffect(() => {
-  //   if (selectedQuizId) {
-  //     console.log("Selected Quiz ID:", selectedQuizId);
-  //   }
-  //   if (quizData) {
-  //     console.log("Quiz Data:", quizData);
-  //   }
-  // }, [selectedQuizId, quizData]);
+
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {
@@ -71,9 +64,9 @@ const AdminDashboard = () => {
     fetchQuizzes();
   }, [adminEmail, quizData]);
   return (
-    <div className="main">
+    <div className="main p-2">
       {/* sidebar */}
-      <div className="sidebar bg-light-gray border border-gray-600 rounded-lg max-w-32 xl:max-w-96">
+      {/* <div className="sidebar bg-light-gray border border-gray-600 rounded-lg max-w-32 xl:max-w-96">
         <ul className="nav-links">
           <li>
             <a href="/admin">
@@ -87,7 +80,7 @@ const AdminDashboard = () => {
             <i className="icon-settings"></i> Account Settings
           </li>
         </ul>
-      </div>
+      </div> */}
       {/* main-content */}
       <div className="content " id="main-content">
         {selectedQuizId === null ? (
@@ -100,11 +93,11 @@ const AdminDashboard = () => {
                 placeholder="Search by quiz title..."
               />
             </div>
-            <div className="quiz-grid  grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 mt-4">
+            <div className="quiz-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-4 mb-4">
               {quizzes.map((quiz, index) => {
                 return (
                   <div
-                    className="quiz-card border p-4 rounded-lg shadow-lg"
+                    className="quiz-card border p-4 rounded-lg shadow-lg mb-4"
                     key={quiz._id}
                   >
                     <h3 className="font-montserrat text-lg">{quiz.title}</h3>

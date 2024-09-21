@@ -22,14 +22,14 @@
   background-color: #e0e0e0;
 }
 
-.content {
+/* .content {
   margin-left: 250px;
   padding: 2rem;
-}
+} */
 
 .quiz-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* grid-template-columns: repeat(3, 1fr); */
   gap: 2rem;
 }
 
