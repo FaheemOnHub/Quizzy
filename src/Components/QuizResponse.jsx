@@ -23,13 +23,16 @@ const QuizResponse = ({ quizId, quizData, onBack, onUpdateQuizData }) => {
   const UpdateGrades = async () => {
     const quizID = quizData._id;
     try {
-      const response = await fetch(`http://localhost:3000/saveQuiz/${quizID}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ result: quizData.result }),
-      });
+      const response = await fetch(
+        `https://quizzy-y6vr.onrender.com/saveQuiz/${quizID}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ result: quizData.result }),
+        }
+      );
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }

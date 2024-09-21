@@ -42,13 +42,16 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/admin/quizzes`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${adminEmail}`,
-          },
-        });
+        const response = await fetch(
+          `https://quizzy-y6vr.onrender.com/admin/quizzes`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${adminEmail}`,
+            },
+          }
+        );
         if (!response.ok) {
           throw new error(`${response.status}: ${response.statusText}`);
         }
