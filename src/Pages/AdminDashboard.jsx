@@ -15,7 +15,7 @@ const AdminDashboard = () => {
   const [quizData, setQuizData] = useState({});
   const handleEditResponse = (quiz, quizID) => {
     setQuizData(quiz);
-    setSelectedQuizId({ quizID });
+    setSelectedQuizId(quizID);
     setIsEditing(true);
     setranspoter(true);
   };
@@ -28,6 +28,7 @@ const AdminDashboard = () => {
   };
   const handleSaveQuiz = async (updatedQuiz) => {
     setQuizData(updatedQuiz);
+    setSelectedQuizId(null);
     setIsEditing(false);
   };
   const handleviewResponse = async (quizID, quiz) => {
@@ -133,15 +134,13 @@ const AdminDashboard = () => {
             onSave={handleSaveQuiz}
             onCancel={() => (setIsEditing(false), setSelectedQuizId(null))}
           />
-        ) : !transpoter ? (
+        ) : (
           <QuizResponse
             quizId={selectedQuizId}
             quizData={quizData}
             onBack={() => setSelectedQuizId(null)}
             onUpdateQuizData={updateQuizData}
           />
-        ) : (
-          <></>
         )}
       </div>
     </div>
