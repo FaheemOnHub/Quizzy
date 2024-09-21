@@ -66,6 +66,14 @@ const AdminDashboard = () => {
     };
     fetchQuizzes();
   }, [adminEmail, quizData]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center mt-20 ">
+        <div className="loading loading-spinner ">Loading...</div>
+      </div>
+    );
+  }
   return (
     <div className="main p-2">
       {/* sidebar */}
