@@ -3,7 +3,7 @@ import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./Components/Home.jsx";
 import QuizPage from "./Components/QuizPage";
-import AdminDashboard from "./Pages/adminDashboard.jsx";
+import AdminDashboard from "./Pages/AdminDashboard.jsx";
 import Swal from "sweetalert2";
 function handelSettings() {
   Swal.fire({
