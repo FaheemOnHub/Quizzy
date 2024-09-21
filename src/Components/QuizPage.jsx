@@ -116,10 +116,10 @@ const QuizPage = () => {
     );
   }
   return (
-    <div className="flex flex-col justify-center items-center border border-white rounded-xl max-w-[600px] xl:max-w-[900px]  mx-auto gap-4 p-4 m-10  bg-white text-black">
+    <div className="flex flex-col justify-center items-center border border-white rounded-xl lg:max-w-[600px] xl:max-w-[900px]  mx-auto gap-4 p-4 m-10  bg-white text-black">
       <h1 className="text-xl font-montserrat font-thin">{`Quiz Title: ${quiz.title}`}</h1>
 
-      <p className="text-2xl text-primary font-montserrat font-light">{`Quiz Description: ${quiz.description}`}</p>
+      <p className="text-xl lg:text-2xl text-primary font-montserrat font-light">{`Quiz Description: ${quiz.description}`}</p>
       <div>
         <input
           type="email"
@@ -143,9 +143,9 @@ const QuizPage = () => {
           {quiz.questions.map((q, i) => (
             <div
               key={i}
-              className="question font-montserrat border border-black rounded-lg p-4 min-w-[400px]"
+              className="question font-montserrat border border-black rounded-lg p-2 lg:min-w-[400px] min-w-[300px]"
             >
-              <h3 className="text-2xl font-montserrat mb-4">
+              <h3 className="text-xl lg:text-2xl font-montserrat mb-4">
                 {q.questionText}
               </h3>
               {q.type === "multiple-choice" && (

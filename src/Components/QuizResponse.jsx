@@ -144,7 +144,7 @@ const QuizResponse = ({ quizId, quizData, onBack, onUpdateQuizData }) => {
       <h1 className="lg:text-2xl font-montserrat mb-4">
         <span className="text-blue-500 ">{quizData.title}</span> : Respondents
       </h1>
-      <ul className="list-disc border  max-w-[800px] mx-auto rounded-lg border-8">
+      <ul className="list-disc   max-w-[800px] mx-auto rounded-lg border-8">
         {quizData?.result.map((response, index) => {
           return (
             <div className=" " key={index}>
