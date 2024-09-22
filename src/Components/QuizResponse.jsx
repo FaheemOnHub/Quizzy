@@ -1,27 +1,37 @@
 import React, { useEffect, useState } from "react";
 
 const QuizResponse = ({ quizId, quizData, onBack, onUpdateQuizData }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedResponse, setSelectedResponse] = useState(null);
-  const handleManualGrading = (responseIndex, questionIndex, value) => {
-    const updatedQuizData = { ...quizData };
-    const updatedResponse = { ...quizData.result[responseIndex] };
-    updatedResponse.answers[questionIndex].isCorrect = value === "correct";
-    if (updatedResponse.answers[questionIndex].isCorrect === "true") {
-      updatedResponse.score += 1;
-    } else {
-      updatedResponse.score -= 1;
-    }
-    updatedQuizData.result[responseIndex] = updatedResponse;
-    // quizData.result[responseIndex] = updatedResponse;
-    onUpdateQuizData(updatedQuizData);
+  const [updatedQuizData, setupdatedQuizData] = useState({});
+  const handleManualGrading = async (responseIndex, questionIndex, value) => {
+    setLoading(true);
+    try {
+      const updatedQuizData = { ...quizData };
+      const updatedResponse = updatedQuizData.result[responseIndex];
+      const prevCorrect = updatedResponse.answers[questionIndex].isCorrect;
+      updatedResponse.answers[questionIndex].isCorrect =
+        value === "correct" ? "true" : "false";
 
-    UpdateGrades();
-    console.log("here", quizData);
+      if (prevCorrect != updatedResponse.answers[questionIndex].isCorrect) {
+        updatedResponse.score +=
+          updatedResponse.answers[questionIndex].isCorrect === "true" ? 1 : -1;
+      }
+      setupdatedQuizData(updatedQuizData);
+
+      await onUpdateQuizData(updatedQuizData);
+
+      await UpdateGrades(updatedQuizData);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
-  const UpdateGrades = async () => {
-    const quizID = quizData._id;
+
+  const UpdateGrades = async (updatedData) => {
+    const quizID = updatedData._id;
     try {
       const response = await fetch(
         `https://quizzy-y6vr.onrender.com/saveQuiz/${quizID}`,
@@ -30,22 +40,19 @@ const QuizResponse = ({ quizId, quizData, onBack, onUpdateQuizData }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ result: quizData.result }),
+          body: JSON.stringify({ result: updatedData.result }),
         }
       );
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }
       const updatedQuiz = await response.json();
+
       console.log("Successfully updated grades:", updatedQuiz);
     } catch (error) {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    console.log(selectedResponse);
-  }, [selectedResponse]);
 
   if (selectedResponse != null) {
     const responseData = quizData.result[selectedResponse];
@@ -135,6 +142,17 @@ const QuizResponse = ({ quizId, quizData, onBack, onUpdateQuizData }) => {
         })}
       </div>
     );
+  }
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center mt-20 ">
+        <div className="loading loading-spinner ">Loading...</div>
+      </div>
+    );
+  }
+  if (error) {
+    return <div className="text-red-500">Error: {error}</div>;
   }
   return (
     <div className="response-list m-4">

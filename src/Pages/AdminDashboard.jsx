@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import QuizPage from "../Components/QuizPage";
 import QuizResponse from "../Components/QuizResponse";
 import EditQuiz from "../Components/EditQuiz";
@@ -13,6 +13,31 @@ const AdminDashboard = () => {
 
   const [selectedQuizId, setSelectedQuizId] = useState(null);
   const [quizData, setQuizData] = useState({});
+
+  const fetchQuizzes = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `https://quizzy-y6vr.onrender.com/admin/quizzes`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${adminEmail}`,
+          },
+        }
+      );
+      const data = await response.json();
+      setQuizzes(data);
+      setLoading(false);
+    } catch (error) {
+      console.log(`${response.status}: ${response.statusText}`);
+      setLoading(false);
+    }
+  }, [adminEmail]);
+  useEffect(() => {
+    fetchQuizzes();
+  }, [fetchQuizzes]);
   const handleEditResponse = (quiz, quizID) => {
     setQuizData(quiz);
     setSelectedQuizId(quizID);
@@ -22,8 +47,14 @@ const AdminDashboard = () => {
   const updateQuizData = (updatedQuiz) => {
     try {
       setQuizData(updatedQuiz);
+      setQuizzes((prevQuizzes) =>
+        prevQuizzes.map((quiz) =>
+          quiz._id === updatedQuiz._id ? updatedQuiz : quiz
+        )
+      );
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      setError("Failed to update quiz data");
     }
   };
   const handleSaveQuiz = async (updatedQuiz) => {
@@ -39,33 +70,33 @@ const AdminDashboard = () => {
     setQuizData(quiz);
   };
 
-  useEffect(() => {
-    const fetchQuizzes = async () => {
-      try {
-        const response = await fetch(
-          `https://quizzy-y6vr.onrender.com/admin/quizzes`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${adminEmail}`,
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new error(`${response.status}: ${response.statusText}`);
-        }
-        const data = await response.json();
-        setQuizzes(data);
-        // console.log(data);
-        setLoading(false);
-      } catch (error) {
-        setError(error.message);
-        setLoading(false);
-      }
-    };
-    fetchQuizzes();
-  }, [adminEmail, quizData]);
+  // useEffect(() => {
+  //   const fetchQuizzes = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `https://quizzy-y6vr.onrender.com/admin/quizzes`,
+  //         {
+  //           method: "GET",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             Authorization: `Bearer ${adminEmail}`,
+  //           },
+  //         }
+  //       );
+  //       if (!response.ok) {
+  //         throw new error(`${response.status}: ${response.statusText}`);
+  //       }
+  //       const data = await response.json();
+  //       setQuizzes(data);
+  //       // console.log(data);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       setError(error.message);
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchQuizzes();
+  // }, [adminEmail, quizData]);
 
   if (loading) {
     return (
