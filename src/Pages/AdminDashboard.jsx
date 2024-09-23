@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import QuizPage from "../Components/QuizPage";
 import QuizResponse from "../Components/QuizResponse";
 import EditQuiz from "../Components/EditQuiz";
-
+import { Input, Description, Field, Label } from "@headlessui/react";
+import clsx from "clsx";
 const AdminDashboard = () => {
   const [transpoter, setranspoter] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
@@ -70,34 +71,6 @@ const AdminDashboard = () => {
     setQuizData(quiz);
   };
 
-  // useEffect(() => {
-  //   const fetchQuizzes = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `https://quizzy-y6vr.onrender.com/admin/quizzes`,
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //             Authorization: `Bearer ${adminEmail}`,
-  //           },
-  //         }
-  //       );
-  //       if (!response.ok) {
-  //         throw new error(`${response.status}: ${response.statusText}`);
-  //       }
-  //       const data = await response.json();
-  //       setQuizzes(data);
-  //       // console.log(data);
-  //       setLoading(false);
-  //     } catch (error) {
-  //       setError(error.message);
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchQuizzes();
-  // }, [adminEmail, quizData]);
-
   if (loading) {
     return (
       <div className="flex justify-center items-center mt-20 ">
@@ -106,34 +79,35 @@ const AdminDashboard = () => {
     );
   }
   return (
-    <div className="main p-2">
-      {/* sidebar */}
-      {/* <div className="sidebar bg-light-gray border border-gray-600 rounded-lg max-w-32 xl:max-w-96">
-        <ul className="nav-links">
-          <li>
-            <a href="/admin">
-              <i className="icon-quiz"></i> All Quizzes
-            </a>
-          </li>
-          <li>
-            <i className="icon-create"></i> Create New Quiz
-          </li>
-          <li>
-            <i className="icon-settings"></i> Account Settings
-          </li>
-        </ul>
-      </div> */}
+    <div className="main p-4 min-h-screen ">
       {/* main-content */}
-      <div className="content " id="main-content">
+      <div
+        className="content bg-gray-100 py-6 flex flex-col justify-center border rounded-lg"
+        id="main-content"
+      >
         {selectedQuizId === null ? (
           <>
             <div className="header">
-              <h1 className="font-montserrat text-2xl p-4">All Quizzes...</h1>
-              <input
+              <h1 className="font-montserrat text-2xl p-4">
+                All Quizzes made by{" "}
+                <span className="font-bold text-md text-gray-300">
+                  {adminEmail}
+                </span>
+              </h1>
+              {/* <input
                 type="text"
                 className="search-bar input p-4 m-4"
                 placeholder="Search by quiz title..."
-              />
+              /> */}
+              <Field>
+                <Input
+                  className={clsx(
+                    "mt-3 p-4 block max-w-[300px] lg:max-w-[640px] rounded-lg border-none bg-gray/5  text-sm/6 text-black",
+                    "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
+                  )}
+                  placeholder="Search by quiz title..."
+                ></Input>
+              </Field>
             </div>
             <div className="quiz-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-4 mb-4">
               {quizzes.map((quiz, index) => {

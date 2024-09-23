@@ -4,7 +4,13 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import QuestionForm from "./QuestionForm";
 import QuizPage from "./QuizPage";
 import Swal from "sweetalert2";
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import {
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  Button,
+} from "@headlessui/react";
 import {
   Dialog,
   Transition,
@@ -298,13 +304,19 @@ const App = () => {
               </div>
 
               <div className="mt-8 flex justify-between">
-                <button
+                {/* <button
                   type="button"
                   onClick={addQuestion}
                   className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   Add Question
-                </button>
+                </button> */}
+                <Button
+                  className="rounded bg-sky-600 py-2 px-4 text-sm text-white data-[hover]:bg-sky-500 data-[active]:bg-sky-700"
+                  onClick={addQuestion}
+                >
+                  Add Question
+                </Button>
 
                 <Menu as="div" className="relative inline-block text-left">
                   <div>
