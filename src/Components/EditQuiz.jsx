@@ -14,9 +14,9 @@ import {
 } from "./ui/card";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
-import { Button } from "@/components/ui/button";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "./ui/button";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Alert, AlertDescription } from "./ui/alert";
 const EditQuiz = ({ quizData: initialData, onSave, onCancel }) => {
   const [quizData, setdata] = useState(initialData || {});
   const [title, settitle] = useState(quizData.title || "");
