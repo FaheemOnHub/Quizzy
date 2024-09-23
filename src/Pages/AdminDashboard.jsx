@@ -190,7 +190,7 @@ const AdminDashboard = () => {
                       <p className="font-montserrat">{`${quiz.result.length} respondants`}</p>
                       <p className="font-montserrat">Created on: 2024-09-01</p>
                     </CardHeader>
-                    <div className="flex items-center justify-between p-4 flex-wrap lg:flex-row">
+                    <div className="flex items-center justify-between p-4 flex-wrap lg:flex-row gap-2">
                       <Button
                         variant="outline"
                         // size="icon"
@@ -213,8 +213,23 @@ const AdminDashboard = () => {
             </div>
           </CardContent>
         </>
+      ) : isEditing && transpoter ? (
+        <>
+          <EditQuiz
+            quizData={quizData}
+            onSave={handleSaveQuiz}
+            onCancel={() => (setIsEditing(false), setSelectedQuizId(null))}
+          />
+        </>
       ) : (
-        <></>
+        <>
+          <QuizResponse
+            quizId={selectedQuizId}
+            quizData={quizData}
+            onBack={() => setSelectedQuizId(null)}
+            onUpdateQuizData={updateQuizData}
+          />
+        </>
       )}
     </Card>
   );
