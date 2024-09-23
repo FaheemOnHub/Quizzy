@@ -346,7 +346,7 @@ const EditQuiz = ({ quizData: initialData, onSave, onCancel }) => {
                   onValueChange={(value) =>
                     handleQuestionChange(index, "type", value)
                   }
-                  className="flex space-x-4 mb-2"
+                  className="flex lg:space-x-4 mb-2 flex-col lg:flex-row"
                 >
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem
