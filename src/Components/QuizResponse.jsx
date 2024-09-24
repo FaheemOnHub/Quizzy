@@ -6,7 +6,7 @@ import {
   CardContent,
   CardDescription,
   CardFooter,
-} from "./components/ui/card";
+} from "./ui/card";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
