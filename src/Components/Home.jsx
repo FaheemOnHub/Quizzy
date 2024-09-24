@@ -223,7 +223,7 @@ const App = () => {
     //     </div>
     //   </div>
     // </div>
-    <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+    <div className=" bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
       <div className="relative py-3 sm:max-w-xl sm:mx-auto">
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
         <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
@@ -339,7 +339,7 @@ const App = () => {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <MenuItems className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
-                      <div className="py-1">
+                      <div className="py-1 flex">
                         <MenuItem>
                           {({ active }) => (
                             <button
