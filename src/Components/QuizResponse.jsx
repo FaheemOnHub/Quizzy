@@ -6,7 +6,7 @@ import {
   CardContent,
   CardDescription,
   CardFooter,
-} from "@/components/ui/card";
+} from "./components/ui/card";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
@@ -86,7 +86,7 @@ const QuizResponse = ({ quizId, quizData, onBack, onUpdateQuizData }) => {
   if (selectedResponse !== null) {
     const responseData = quizData.result[selectedResponse];
     return (
-      <Card className="max-w-3xl mx-auto lg:min-h-[90%]">
+      <Card className="max-w-3xl mx-auto ">
         <CardHeader>
           <CardTitle>Response by {responseData.userID}</CardTitle>
           <CardDescription>Score: {responseData.score}</CardDescription>
