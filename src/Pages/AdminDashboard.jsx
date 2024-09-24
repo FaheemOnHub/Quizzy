@@ -10,8 +10,8 @@ import {
   CardDescription,
   CardFooter,
 } from "../Components/ui/card";
-import { Input } from "@/Components/ui/input";
-import { Button } from "@/Components/ui/button";
+import { Input } from "./ui/input";
+import { Button } from "./Components/ui/button";
 import { Bolt, Save, Eye } from "lucide-react";
 const AdminDashboard = () => {
   const [transpoter, setranspoter] = useState(true);
