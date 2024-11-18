@@ -13,13 +13,19 @@ import {
 import Home from "./Components/Home.jsx";
 import QuizPage from "./Components/QuizPage";
 import AdminDashboard from "./Pages/AdminDashboard.jsx";
+import Login from "./Components/Login.jsx";
 import Swal from "sweetalert2";
+import Signup from "./Components/ui/Signup.jsx";
 function handelSettings() {
   Swal.fire({
     icon: "warning",
     title: "working on it 👨🏼‍🔧",
   });
 }
+const handleLogout = () => {
+  localStorage.removeItem("token");
+  window.location.href = "/login"; // Redirect to login page
+};
 const App = () => {
   return (
     <Router>
@@ -33,6 +39,9 @@ const App = () => {
               qu🤯zzy
             </h3>
           </a>
+          <button onClick={handleLogout} className="border rounded-lg p-2">
+            Logout
+          </button>
           <div className="">
             <Menu>
               <MenuButton className="inline-flex items-center gap-2 rounded-md bg-gray-800 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-700 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white">
@@ -50,6 +59,17 @@ const App = () => {
                     <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10">
                       <PencilIcon className="size-4 fill-white/30" />
                       Admin Panel
+                      <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-[focus]:inline">
+                        ⌘A
+                      </kbd>
+                    </button>
+                  </a>
+                </MenuItem>
+                <MenuItem>
+                  <a href="/login">
+                    <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10">
+                      <PencilIcon className="size-4 fill-white/30" />
+                      Login Panel
                       <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-[focus]:inline">
                         ⌘A
                       </kbd>
@@ -77,6 +97,8 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/quiz/:id" element={<QuizPage />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </div>
     </Router>

@@ -65,7 +65,7 @@ const QuizPage = () => {
     const submitData = { answers, email };
     try {
       const response = await fetch(
-        `https://quizzy-y6vr.onrender.com/api/quiz/${id}/submit`,
+        `https://localhost:3000/api/quiz/${id}/submit`,
         {
           method: "POST",
           headers: {
@@ -83,7 +83,7 @@ const QuizPage = () => {
   };
   useEffect(() => {
     console.log("Quiz ID:", id); // Log the id value to confirm
-    fetch(`https://quizzy-y6vr.onrender.com/api/quiz/${id}`)
+    fetch(`http://localhost:3000/api/quiz/${id}`)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Error ${res.status}: ${res.statusText}`);

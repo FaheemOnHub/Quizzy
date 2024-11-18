@@ -6,7 +6,9 @@ import connectDB from "./mongodb/connect.js";
 import saveQuiz from "./routes/saveQuiz.js";
 import fetchQuiz from "./routes/fetchQuiz.js";
 import adminFetch from "./routes/adminFetch.js";
+import auth from "./routes/auth.js";
 import Quiz from "./mongodb/models/Post.js";
+import { authenticateToken } from "./middleware/auth.js";
 dotenv.config();
 const app = express();
 const PORT = 3000;
@@ -15,10 +17,11 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
-app.use("/saveQuiz", saveQuiz);
-app.use("/api", fetchQuiz);
-app.use("/admin", adminFetch);
-app.use("/saveQuiz", saveQuiz);
+app.use("/user", auth);
+app.use("/saveQuiz", authenticateToken, saveQuiz);
+app.use("/api", authenticateToken, fetchQuiz);
+app.use("/admin", authenticateToken, adminFetch);
+app.use("/saveQuiz", authenticateToken, saveQuiz);
 //clean the db <-->
 app.get("/delete", async (req, res) => {
   try {

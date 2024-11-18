@@ -95,7 +95,7 @@ const EditQuiz = ({ quizData: initialData, onSave, onCancel }) => {
   const saveQuiz = async () => {
     try {
       const response = await fetch(
-        `https://quizzy-y6vr.onrender.com/saveQuiz/updateQuiz/${quizData._id}`,
+        `https://localhost:3000/saveQuiz/updateQuiz/${quizData._id}`,
         {
           method: "PATCH",
           headers: {

@@ -50,7 +50,7 @@ const QuizResponse = ({ quizId, quizData, onBack, onUpdateQuizData }) => {
   const UpdateGrades = async (updatedData) => {
     try {
       const response = await fetch(
-        `https://quizzy-y6vr.onrender.com/saveQuiz/${updatedData._id}`,
+        `localhost:3000/saveQuiz/${updatedData._id}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },

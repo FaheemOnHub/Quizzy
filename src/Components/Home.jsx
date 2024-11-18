@@ -117,16 +117,13 @@ const App = () => {
     }
     const quizData = { ownerEmail, title, description, questions };
     try {
-      const response = await fetch(
-        "https://quizzy-y6vr.onrender.com/saveQuiz",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(quizData),
-        }
-      );
+      const response = await fetch("http://localhost:3000/saveQuiz", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(quizData),
+      });
       const data = await response.json();
       console.log(data);
       clearLocalStorage();
