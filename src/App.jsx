@@ -16,6 +16,8 @@ import AdminDashboard from "./Pages/AdminDashboard.jsx";
 import Login from "./Components/Login.jsx";
 import Swal from "sweetalert2";
 import Signup from "./Components/ui/Signup.jsx";
+import { Link } from "react-router-dom";
+import LandingPage from "./Components/LandingPage.jsx";
 function handelSettings() {
   Swal.fire({
     icon: "warning",
@@ -30,7 +32,7 @@ const App = () => {
   return (
     <Router>
       <div id="main">
-        <div
+        {/* <div
           id="navbar"
           className="flex flex-row justify-between items-center p-3 m-auto  lg:ml-20 lg:mr-20  "
         >
@@ -89,12 +91,10 @@ const App = () => {
               </MenuItems>
             </Menu>
           </div>
-          {/* <div className="lg:text-4xl text-xl" onClick={() => handelSettings()}>
-            <ion-icon name="settings-outline"></ion-icon>
-          </div> */}
-        </div>
+        </div> */}
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/interface" element={<Home />} />
           <Route path="/quiz/:id" element={<QuizPage />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/login" element={<Login />} />
