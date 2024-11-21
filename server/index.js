@@ -18,10 +18,10 @@ app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
 app.use("/user", auth);
-app.use("/saveQuiz", authenticateToken, saveQuiz);
-app.use("/api", authenticateToken, fetchQuiz);
+
+app.use("/api", fetchQuiz);
 app.use("/admin", authenticateToken, adminFetch);
-app.use("/saveQuiz", authenticateToken, saveQuiz);
+app.use("/saveQuiz", saveQuiz);
 //clean the db <-->
 app.get("/delete", async (req, res) => {
   try {

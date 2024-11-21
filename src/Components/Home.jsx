@@ -20,7 +20,7 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const token = localStorage.getItem("token");
   function closeModal() {
     setIsOpen(false);
   }
@@ -116,11 +116,13 @@ const App = () => {
       return;
     }
     const quizData = { ownerEmail, title, description, questions };
+    console.log(quizData);
     try {
       const response = await fetch("http://localhost:3000/saveQuiz", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(quizData),
       });
@@ -326,48 +328,38 @@ const App = () => {
                     </MenuButton>
                   </div>
 
-                  <Transition
-                    as={React.Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <MenuItems className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
-                      <div className="py-1 flex">
-                        <MenuItem>
-                          {({ active }) => (
-                            <button
-                              onClick={clearLocalStorage}
-                              className={`${
-                                active
-                                  ? "bg-gray-100 text-gray-900"
-                                  : "text-gray-700"
-                              } group flex items-center px-4 py-2 text-sm w-full text-left`}
-                            >
-                              Clear Form
-                            </button>
-                          )}
-                        </MenuItem>
-                        <MenuItem>
-                          {({ active }) => (
-                            <button
-                              onClick={openModal}
-                              className={`${
-                                active
-                                  ? "bg-gray-100 text-gray-900"
-                                  : "text-gray-700"
-                              } group flex items-center px-4 py-2 text-sm w-full text-left`}
-                            >
-                              Save Quiz
-                            </button>
-                          )}
-                        </MenuItem>
-                      </div>
-                    </MenuItems>
-                  </Transition>
+                  <MenuItems className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
+                    <div className="py-1 flex">
+                      <MenuItem>
+                        {({ active }) => (
+                          <button
+                            onClick={clearLocalStorage}
+                            className={`${
+                              active
+                                ? "bg-gray-100 text-gray-900"
+                                : "text-gray-700"
+                            } group flex items-center px-4 py-2 text-sm w-full text-left`}
+                          >
+                            Clear Form
+                          </button>
+                        )}
+                      </MenuItem>
+                      <MenuItem>
+                        {({ active }) => (
+                          <button
+                            onClick={openModal}
+                            className={`${
+                              active
+                                ? "bg-gray-100 text-gray-900"
+                                : "text-gray-700"
+                            } group flex items-center px-4 py-2 text-sm w-full text-left`}
+                          >
+                            Save Quiz
+                          </button>
+                        )}
+                      </MenuItem>
+                    </div>
+                  </MenuItems>
                 </Menu>
               </div>
             </form>
@@ -379,6 +371,7 @@ const App = () => {
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition
             as={React.Fragment}
+            show={isOpen}
             enter="ease-out duration-300"
             enterFrom="opacity-0"
             enterTo="opacity-100"
@@ -393,6 +386,7 @@ const App = () => {
             <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition
                 as={React.Fragment}
+                show={isOpen}
                 enter="ease-out duration-300"
                 enterFrom="opacity-0 scale-95"
                 enterTo="opacity-100 scale-100"
@@ -422,7 +416,7 @@ const App = () => {
                         closeModal();
                       }}
                     >
-                      Save
+                      Save now
                     </button>
                     <button
                       type="button"

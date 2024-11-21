@@ -65,7 +65,7 @@ const QuizPage = () => {
     const submitData = { answers, email };
     try {
       const response = await fetch(
-        `https://localhost:3000/api/quiz/${id}/submit`,
+        `http://localhost:3000/api/quiz/${id}/submit`,
         {
           method: "POST",
           headers: {
