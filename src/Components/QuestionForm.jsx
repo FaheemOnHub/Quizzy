@@ -1,10 +1,10 @@
 import React from "react";
-
+import ImageInput from "./ImageInput";
 const QuestionForm = ({ question, index, updateQuestion }) => {
-  const handleOptionChange = (optionIndex, newValue) => {
-    const updatedOptions = question.options.map((option, i) => {
-      return i === optionIndex ? newValue : option;
-    });
+  const handleOptionChange = (optionIndex, key, value) => {
+    const updatedOptions = question.options.map((option, i) =>
+      i === optionIndex ? { ...option, [key]: value } : option
+    );
     updateQuestion(index, { ...question, options: updatedOptions });
   };
   const handleCorrectAnswerChange = (correctOption) => {
@@ -55,20 +55,44 @@ const QuestionForm = ({ question, index, updateQuestion }) => {
                   type="text"
                   key={optionIndex}
                   placeholder={`Option ${optionIndex + 1}`}
-                  value={option}
+                  value={option.text}
                   onChange={(e) =>
-                    handleOptionChange(optionIndex, e.target.value)
+                    handleOptionChange(optionIndex, "text", e.target.value)
                   }
                   className="w-full p-2 mb-2 font-montserrat"
                 />
+                <ImageInput />
+                {/* <label
+                  class="w-full border rounded-md p-2 mb-2 ml-2 font-montserrat"
+                  for={optionIndex + "img"}
+                >
+                  Add Media
+                </label>
+                <input
+                  type="file"
+                  id={optionIndex + "img"}
+                  accept="image/*"
+                  key={optionIndex + "img"}
+                  placeholder={"Add Media"}
+                  onChange={(e) =>
+                    handleOptionChange(
+                      optionIndex,
+                      "image",
+                      e.target.files[0]
+                        ? URL.createObjectURL(e.target.files[0])
+                        : null
+                    )
+                  }
+                  className="hidden"
+                /> */}
                 <div className="flex items-center justify-center">
                   <label className="ml-2 text-sm font-medium font-mon text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 min-w-[100px] rounded-lg ">
                     <input
                       type="radio"
                       name={`correct-answer-${index}`}
-                      id={`correct-answer-${index}`}
-                      checked={question.correctAnswer === option}
-                      onChange={() => handleCorrectAnswerChange(option)}
+                      id={`correct-answer-${index}-${optionIndex}`}
+                      checked={question.correctAnswer === option.text}
+                      onChange={() => handleCorrectAnswerChange(option.text)}
                       className="w-6"
                     />
                     Correct
@@ -108,11 +132,11 @@ const QuestionForm = ({ question, index, updateQuestion }) => {
             id={`true-${index}`}
             name={`true-false-${index}`}
             value="True"
-            checked={question?.options[0] === "True"}
+            checked={question?.options[0].text === "True"}
             onChange={() => {
               updateQuestion(index, {
                 ...question,
-                options: ["True", "False"],
+                options: [{ text: "True" }, { text: "False" }],
                 correctAnswer: "True",
               });
             }}
@@ -125,11 +149,11 @@ const QuestionForm = ({ question, index, updateQuestion }) => {
             id={`false-${index}`}
             name={`true-false-${index}`}
             value="False"
-            checked={question?.options[0] === "False"}
+            checked={question?.options[0].text === "False"}
             onChange={() => {
               updateQuestion(index, {
                 ...question,
-                options: ["False", "True"],
+                options: [{ text: "False" }, { text: "True" }],
                 correctAnswer: "False",
               });
             }}

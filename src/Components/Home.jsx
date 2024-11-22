@@ -75,14 +75,20 @@ const App = () => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     setisEmailValid(emailPattern.test(email));
   };
+  useEffect(() => {
+    console.log(questions);
+  }, [questions]);
   const addQuestion = () => {
     setQuestions([
       ...questions,
       {
         questionText: "",
         type: "multiple-choice",
-        options: ["", ""],
-        correctAnswer: "",
+        options: [
+          { text: "", image: null },
+          { text: "", image: null },
+        ],
+        correctAnswer: null,
       },
     ]);
   };
@@ -141,87 +147,6 @@ const App = () => {
     }
   };
   return (
-    // <div className="">
-    //   <div
-    //     id="main"
-    //     className="flex flex-col justify-center items-center mt-20"
-    //   >
-    //     <h1 className="lg:text-4xl text-xl text-blue-300 font-montserrat p-2">
-    //       Create awesome quiz in minutes
-    //     </h1>
-    //     <p className="mt-2 font-montserrat p-2 ">
-    //       qu🤯zzy makes it super easy to take quizzes
-    //     </p>
-
-    //     <div className="border border-white lg:max-w-[800px] mt-10 p-2 rounded-lg ">
-    //       <input
-    //         type="email"
-    //         id="email"
-    //         pattern=".+@example\.com"
-    //         size="30"
-    //         required
-    //         value={ownerEmail}
-    //         className="input font-montserrat font-normal mb-4 border border-black mx-auto"
-    //         placeholder="Enter your Email:"
-    //         onChange={(e) => setownerEmail(e.target.value)}
-    //       />
-    //       {!isEmailValid && ownerEmail && (
-    //         <p className="text-blue-500 m-1 lg:mg-4 font-montserrat alert">
-    //           Please enter a valid email
-    //         </p>
-    //       )}
-    //       <input
-    //         type="text"
-    //         placeholder="Quiz Title"
-    //         value={title}
-    //         required
-    //         onChange={(e) => {
-    //           return setTitle(e.target.value);
-    //         }}
-    //         className=" lg:min-w-96 p-2 w-full mb-4 text-xl font-montserrat rounded-lg"
-    //       />
-    //       <textarea
-    //         name=""
-    //         id=""
-    //         placeholder="Quiz Description"
-    //         value={description}
-    //         onChange={(e) => setDescription(e.target.value)}
-    //         className="lg:min-w-96 p-2 w-full text-lg mb-4 font-montserrat resize-none rounded-lg"
-    //       ></textarea>
-    //       {/* Render each question using the QuestionForm component */}
-    //       {questions.map((question, index) => {
-    //         return (
-    //           <QuestionForm
-    //             index={index}
-    //             key={index}
-    //             question={question}
-    //             updateQuestion={updateQuestion}
-    //           />
-    //         );
-    //       })}
-
-    //       <button
-    //         onClick={addQuestion}
-    //         className="bg-primary p-2 text-white rounded mt-4 font-montserrat"
-    //       >
-    //         Add Question
-    //       </button>
-    //       <button
-    //         onClick={clearLocalStorage}
-    //         className="bg-primary p-2 text-white rounded mt-4 ml-4 font-montserrat"
-    //       >
-    //         Clear Form
-    //       </button>
-    //       <button
-    //         onClick={handleSaveQuiz}
-    //         className="bg-green-500 p-2 text-white rounded mt-4 ml-4 font-montserrat transform rotate-3
-    //         "
-    //       >
-    //         Save Quiz
-    //       </button>
-    //     </div>
-    //   </div>
-    // </div>
     <div className=" bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
       <div className="relative py-3 sm:max-w-xl sm:mx-auto">
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
@@ -303,13 +228,6 @@ const App = () => {
               </div>
 
               <div className="mt-8 flex justify-between">
-                {/* <button
-                  type="button"
-                  onClick={addQuestion}
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  Add Question
-                </button> */}
                 <Button
                   className="rounded bg-sky-600 py-2 px-4 text-sm text-white data-[hover]:bg-sky-500 data-[active]:bg-sky-700"
                   onClick={addQuestion}

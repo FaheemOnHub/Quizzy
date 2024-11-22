@@ -61,6 +61,7 @@ router.route("/").post(async (req, res) => {
           questionText: q.questionText,
           type: q.type,
           options: q.options,
+
           correctAnswer: q.correctAnswer,
         };
       }),
