@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const ImageInput = () => {
+const ImageInput = ({ id, onImageAdd }) => {
   const [image, setImage] = useState(null);
-
+  useEffect(() => {
+    //as there was a immediate need to update onImageAdd , so if we directly use setState and update it will result in stale state , as useStates are updated asynchronously
+    onImageAdd(id, "image", image);
+  }, [image]);
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setImage(URL.createObjectURL(file));
+      const imageUrl = URL.createObjectURL(file);
+
+      setImage((prevImage) => {
+        if (prevImage) {
+          URL.revokeObjectURL(prevImage); //createObjectUrl creates a reference to the browser's memory and this reference is not automatically removed or replaced , so you need to remove it urself incase to prevent memory leakage
+        }
+        return imageUrl;
+      });
     }
   };
 
@@ -15,13 +25,13 @@ const ImageInput = () => {
   };
 
   return (
-    <div className="flex  items-center  rounded-lg w-full mx-auto">
+    <div className="flex  items-center  rounded-lg  mx-auto">
       {image ? (
         <div className="relative">
           <img
             src={image}
             alt="Uploaded Preview"
-            className="w-full h-24 object-cover rounded-lg"
+            className="max-w-[72px] h-24 object-cover rounded-lg"
           />
           <button
             onClick={handleClearImage}

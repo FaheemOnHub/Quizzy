@@ -50,7 +50,8 @@ const QuestionForm = ({ question, index, updateQuestion }) => {
         <div>
           {question.options.map((option, optionIndex) => {
             return (
-              <div className="flex items-center mb-2 mx-auto">
+              <div className="flex items-center mb-2 mx-auto ">
+                <ImageInput id={optionIndex} onImageAdd={handleOptionChange} />
                 <input
                   type="text"
                   key={optionIndex}
@@ -59,34 +60,11 @@ const QuestionForm = ({ question, index, updateQuestion }) => {
                   onChange={(e) =>
                     handleOptionChange(optionIndex, "text", e.target.value)
                   }
-                  className="w-full p-2 mb-2 font-montserrat"
+                  className=" p-2 mb-2 font-montserrat"
                 />
-                <ImageInput />
-                {/* <label
-                  class="w-full border rounded-md p-2 mb-2 ml-2 font-montserrat"
-                  for={optionIndex + "img"}
-                >
-                  Add Media
-                </label>
-                <input
-                  type="file"
-                  id={optionIndex + "img"}
-                  accept="image/*"
-                  key={optionIndex + "img"}
-                  placeholder={"Add Media"}
-                  onChange={(e) =>
-                    handleOptionChange(
-                      optionIndex,
-                      "image",
-                      e.target.files[0]
-                        ? URL.createObjectURL(e.target.files[0])
-                        : null
-                    )
-                  }
-                  className="hidden"
-                /> */}
+
                 <div className="flex items-center justify-center">
-                  <label className="ml-2 text-sm font-medium font-mon text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 min-w-[100px] rounded-lg ">
+                  <label className="ml-2 text-sm font-medium font-montserrat text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 min-w-[100px] rounded-lg ">
                     <input
                       type="radio"
                       name={`correct-answer-${index}`}
