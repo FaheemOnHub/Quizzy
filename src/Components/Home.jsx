@@ -122,6 +122,7 @@ const App = () => {
       return;
     }
     const quizData = { ownerEmail, title, description, questions };
+
     console.log(quizData);
     try {
       const response = await fetch("http://localhost:3000/saveQuiz", {

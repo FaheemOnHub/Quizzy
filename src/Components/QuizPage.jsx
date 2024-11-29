@@ -93,6 +93,7 @@ const QuizPage = () => {
       .then((data) => {
         setquiz(data);
         setloading(false);
+        console.log(data);
       })
       .catch((err) => {
         console.error(err.message);
@@ -149,19 +150,30 @@ const QuizPage = () => {
                 {q.questionText}
               </h3>
               {q.type === "multiple-choice" && (
-                <div className="card flex flex-row flex-wrap gap-5">
+                <div className="card flex flex-row flex-wrap gap-5 ">
                   {q.options.map((option, optionIndex) => {
                     return (
-                      <div key={optionIndex} className="">
+                      <div
+                        key={optionIndex}
+                        className="flex flex-col items-center justify-center"
+                      >
+                        <div className="w-[150px] h-[150px] overflow-hidden rounded-lg border">
+                          <img
+                            src={option.image}
+                            alt="Dynamic Image"
+                            className="rounded-lg object-contain h-[100%] w-[100%] "
+                          />
+                        </div>
+
                         <label className=" bg-red-50 rounded-lg text-lg">
                           <input
                             type="radio"
                             name={`question-${i}`}
-                            value={option}
-                            checked={answers[i] === option}
-                            onChange={() => handleAnswerChange(i, option)}
+                            value={option.text}
+                            checked={answers[i] === option.text}
+                            onChange={() => handleAnswerChange(i, option.text)}
                           />
-                          {option}
+                          {option.text}
                         </label>
                       </div>
                     );

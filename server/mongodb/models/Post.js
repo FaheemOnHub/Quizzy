@@ -3,15 +3,13 @@ import { v4 as uuidv4 } from "uuid";
 const optionSchema = new mongoose.Schema({
   text: { type: String, required: true }, // Option text
   image: {
-    type: Buffer, // Binary data for image
-    contentType: String, // MIME type (e.g., 'image/png', 'image/jpeg')
+    type: String,
   },
 });
 const questionSchema = new mongoose.Schema({
   questionText: { type: String, required: true },
   questionImage: {
-    type: Buffer, // Binary data for uploaded images
-    contentType: String, // MIME type (e.g., 'image/png', 'image/jpeg')
+    type: String,
   },
   type: { type: String, required: true },
   options: { type: [optionSchema], required: true },
