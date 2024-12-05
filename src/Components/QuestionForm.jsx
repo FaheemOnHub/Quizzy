@@ -1,6 +1,8 @@
 import React from "react";
 import ImageInput from "./ImageInput";
-const QuestionForm = ({ question, index, updateQuestion }) => {
+import { Check } from "lucide-react";
+
+const QuestionForm = ({ question, index, updateQuestion, selectedFont }) => {
   const handleOptionChange = (optionIndex, key, value) => {
     const updatedOptions = question.options.map((option, i) =>
       i === optionIndex ? { ...option, [key]: value } : option
@@ -14,7 +16,13 @@ const QuestionForm = ({ question, index, updateQuestion }) => {
     });
   };
   return (
-    <div className="mb-4">
+    <div className="mb-4 space-y-4">
+      <h2
+        className={`text-lg font-semibold text-gray-900`}
+        style={{ fontFamily: selectedFont }}
+      >
+        Question {index + 1}
+      </h2>
       <input
         type="text"
         placeholder="Question"
@@ -25,7 +33,8 @@ const QuestionForm = ({ question, index, updateQuestion }) => {
             questionText: e.target.value,
           });
         }}
-        className="w-full p-2 mb-2 font-montserrat"
+        className="mt-1 block w-full bg-gray-50 rounded-lg px-4 py-3 border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 "
+        style={{ fontFamily: selectedFont }}
       />
       <select
         value={question.type}
@@ -50,31 +59,41 @@ const QuestionForm = ({ question, index, updateQuestion }) => {
         <div>
           {question.options.map((option, optionIndex) => {
             return (
-              <div className="flex items-center mb-2 mx-auto ">
+              <div>
                 <ImageInput id={optionIndex} onImageAdd={handleOptionChange} />
-                <input
-                  type="text"
-                  key={optionIndex}
-                  placeholder={`Option ${optionIndex + 1}`}
-                  value={option.text}
-                  onChange={(e) =>
-                    handleOptionChange(optionIndex, "text", e.target.value)
-                  }
-                  className=" p-2 mb-2 font-montserrat"
-                />
+                <div className="flex items-center mb-2 mx-auto justify-between">
+                  <input
+                    type="text"
+                    key={optionIndex}
+                    placeholder={`Option ${optionIndex + 1}`}
+                    value={option.text}
+                    onChange={(e) =>
+                      handleOptionChange(optionIndex, "text", e.target.value)
+                    }
+                    className=" mt-1 block w-full bg-gray-50 rounded-lg px-4 py-3 border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 "
+                    style={{ fontFamily: selectedFont }}
+                  />
 
-                <div className="flex items-center justify-center">
-                  <label className="ml-2 text-sm font-medium font-montserrat text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 min-w-[100px] rounded-lg ">
+                  <div className="flex items-center justify-center">
                     <input
                       type="radio"
                       name={`correct-answer-${index}`}
                       id={`correct-answer-${index}-${optionIndex}`}
                       checked={question.correctAnswer === option.text}
                       onChange={() => handleCorrectAnswerChange(option.text)}
-                      className="w-6"
+                      // className="w-6"
+                      className="peer hidden"
                     />
-                    Correct
-                  </label>
+                    <label
+                      htmlFor={`correct-answer-${index}-${optionIndex}`}
+                      className="w-10 h-10 rounded-full border-2  flex items-center justify-center cursor-pointer m-4
+               peer-checked:border-green-500 peer-checked:bg-green-500"
+                    >
+                      {question.correctAnswer === option.text && (
+                        <Check className="w-5 h-5" />
+                      )}
+                    </label>
+                  </div>
                 </div>
               </div>
             );

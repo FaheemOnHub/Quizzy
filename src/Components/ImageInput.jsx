@@ -1,80 +1,106 @@
 import React, { useEffect, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { Upload } from "lucide-react"; // Replace with your preferred icon library
 
 const ImageInput = ({ id, onImageAdd }) => {
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     if (image != null) {
-      //as there was a immediate need to update onImageAdd , so if we directly use setState and update it will result in stale state , as useStates are updated asynchronously
-      console.log("Effect ran because count is:", image);
       const fetcher = async () => {
-        const response = await fetch("http://localhost:3000/cloudinary", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ image: image }),
-        });
-        const data = await response.json();
-        console.log(data);
-        onImageAdd(id, "image", data.imageURI);
+        setLoading(true);
+        try {
+          const response = await fetch("http://localhost:3000/cloudinary", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ image: image }),
+          });
+          const data = await response.json();
+          onImageAdd(id, "image", data.imageURI);
+        } catch (error) {
+          console.error("Image upload failed", error);
+        } finally {
+          setLoading(false);
+        }
       };
       fetcher();
     }
   }, [image]);
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImage(e.target.result);
-      };
-      reader.readAsDataURL(file);
-      // setImage((prevImage) => {
-      //   if (prevImage) {
-      //     URL.revokeObjectURL(prevImage); //createObjectUrl creates a reference to the browser's memory and this reference is not automatically removed or replaced , so you need to remove it urself incase to prevent memory leakage
-      //   }
-      //   return imageUrl;
-      // });
-    }
-  };
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    accept: { "image/*": [] },
+    onDrop: (acceptedFiles) => {
+      const file = acceptedFiles[0];
+      if (file) {
+        if (!file.type.startsWith("image/")) {
+          alert("Please upload a valid image file!");
+          return;
+        }
+        if (file.size > 10 * 1024 * 1024) {
+          alert("File size exceeds 10MB!");
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            console.log(`Width: ${img.width}, Height: ${img.height}`);
+          };
+          img.src = e.target.result;
+          setImage(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    },
+  });
 
   const handleClearImage = () => {
     setImage(null);
   };
 
   return (
-    <div className="flex  items-center  rounded-lg  mx-auto">
+    <div className="space-y-4 mx-auto">
       {image ? (
         <div className="relative">
           <img
             src={image}
             alt="Uploaded Preview"
-            className="max-w-[72px] h-24 object-cover rounded-lg"
+            className="object-cover rounded-lg"
           />
           <button
             onClick={handleClearImage}
-            className="absolute top-0 right-0 bg-black text-white p-[0.10rem] rounded-full shadow hover:bg-blue-600"
+            className="absolute top-2 right-2 text-black p-[0.20rem] m-2 rounded-full  hover:bg-blue-600"
           >
-            ✕
+            Remove
           </button>
         </div>
       ) : (
-        <div className="flex items-center justify-center  w-full">
-          <label
-            htmlFor="image-upload"
-            className="cursor-pointer bg-blue-500 text-white p-2 rounded shadow hover:bg-blue-600"
-          >
-            Choose an Image
-          </label>
-          <input
-            id="image-upload"
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="hidden"
-          />
+        <div
+          {...getRootProps()}
+          className={`mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-lg transition-colors duration-200 ${
+            isDragActive
+              ? "border-blue-500 bg-blue-50"
+              : "border-gray-300 hover:border-gray-400"
+          }`}
+        >
+          <div className="space-y-1 text-center">
+            <Upload className="mx-auto h-12 w-12 text-gray-400" />
+            <div className="flex text-sm text-gray-600">
+              <input {...getInputProps()} />
+              <label className="relative cursor-pointer rounded-md font-medium text-blue-600 hover:text-blue-500">
+                <span>Upload a file</span>
+              </label>
+              <p className="pl-1">or drag and drop</p>
+            </div>
+            <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+          </div>
         </div>
       )}
+      {loading && <div className="text-blue-600">Uploading...</div>}
     </div>
   );
 };
