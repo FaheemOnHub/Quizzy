@@ -18,8 +18,9 @@ import Swal from "sweetalert2";
 import Signup from "./Components/ui/Signup.jsx";
 import { Link } from "react-router-dom";
 import LandingPage from "./Components/LandingPage.jsx";
-import QuizForm from "./Components/QuizPage2.jsx";
+
 import CustomizeTab from "./Components/CustomizeTab.jsx";
+import CustomColorPicker from "./Components/trial.jsx";
 function handelSettings() {
   Swal.fire({
     icon: "warning",
@@ -98,11 +99,12 @@ const App = () => {
           <Route path="/" element={<LandingPage />} />
           <Route path="/interface" element={<Home />} />
           <Route path="/quiz/:id" element={<QuizPage />} />
-          {/* <Route path="/quiz2" element={<QuizForm />} /> */}
+
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/customize" element={<CustomizeTab />} />
+          <Route path="/test" element={<CustomColorPicker />} />
         </Routes>
       </div>
     </Router>
