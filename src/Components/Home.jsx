@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import QuestionForm from "./QuestionForm";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button as ShadButton } from "@/components/ui/button";
-import { Upload, Palette, Type, RotateCcw, Atom } from "lucide-react";
+import { Upload, Palette, Type, RotateCcw, Atom, Eye } from "lucide-react";
 import QuizPage from "./QuizPage";
 import Swal from "sweetalert2";
 import {
@@ -68,6 +68,7 @@ const App = () => {
       return [
         {
           questionText: "",
+          questionImage: "",
           type: "multiple-choice",
           options: [
             { text: "", image: null },
@@ -173,20 +174,6 @@ const App = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl "></div>
 
         <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20 border border-red-500">
-          {/* <div className="   absolute top-0 right-0 ">
-            <button
-              className="px-6 py-4 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              onClick={() => setcurrentState("quiz")}
-            >
-              Quiz-Mode
-            </button>
-            <button
-              className="px-6 py-4 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              onClick={() => setcurrentState("customize")}
-            >
-              Customize Branding
-            </button>
-          </div> */}
           <Tabs defaultValue="account" className="w-full ">
             <TabsList className="flex flex-row">
               <TabsTrigger
@@ -297,6 +284,13 @@ const App = () => {
                     Add Question
                   </Button>
 
+                  <Button
+                    className="rounded bg-sky-600 py-2 px-4 text-sm text-white data-[hover]:bg-sky-500 data-[active]:bg-sky-700 space-x-4
+                  "
+                  >
+                    <Eye className="inline" />
+                    <span>Preview</span>
+                  </Button>
                   <Menu as="div" className="relative inline-block text-left">
                     <div>
                       <MenuButton className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">

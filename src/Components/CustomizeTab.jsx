@@ -235,6 +235,7 @@ import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Upload } from "lucide-react";
 import { HexColorPicker } from "react-colorful";
+import ImageUploader from "./ImageUploader";
 
 const CustomizeTab = ({ selectedFont, setSelectedFont }) => {
   const defaultSettings = {
@@ -247,6 +248,7 @@ const CustomizeTab = ({ selectedFont, setSelectedFont }) => {
   };
 
   const [logo, setLogo] = useState(null);
+  const [backgroundImage, setBackgroundImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [activePicker, setActivePicker] = useState(null);
   const [customizationSettings, setCustomizationSettings] =
@@ -265,34 +267,34 @@ const CustomizeTab = ({ selectedFont, setSelectedFont }) => {
   };
 
   // Drag and drop for logo upload
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept: { "image/*": [] },
-    onDrop: (acceptedFiles) => {
-      const file = acceptedFiles[0];
-      if (file) {
-        if (!file.type.startsWith("image/")) {
-          alert("Please upload a valid image file!");
-          return;
-        }
-        if (file.size > 10 * 1024 * 1024) {
-          alert("File size exceeds 10MB!");
-          return;
-        }
+  // const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  //   accept: { "image/*": [] },
+  //   onDrop: (acceptedFiles) => {
+  //     const file = acceptedFiles[0];
+  //     if (file) {
+  //       if (!file.type.startsWith("image/")) {
+  //         alert("Please upload a valid image file!");
+  //         return;
+  //       }
+  //       if (file.size > 10 * 1024 * 1024) {
+  //         alert("File size exceeds 10MB!");
+  //         return;
+  //       }
 
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const img = new Image();
-          img.src = e.target.result;
-          setLogo(e.target.result);
-          setCustomizationSettings((prev) => ({
-            ...prev,
-            backgroundImage: e.target.result,
-          }));
-        };
-        reader.readAsDataURL(file);
-      }
-    },
-  });
+  //       const reader = new FileReader();
+  //       reader.onload = (e) => {
+  //         const img = new Image();
+  //         img.src = e.target.result;
+  //         setLogo(e.target.result);
+  //         setCustomizationSettings((prev) => ({
+  //           ...prev,
+  //           backgroundImage: e.target.result,
+  //         }));
+  //       };
+  //       reader.readAsDataURL(file);
+  //     }
+  //   },
+  // });
 
   // Clear uploaded logo
   const handleClearImage = () => {
@@ -347,46 +349,23 @@ const CustomizeTab = ({ selectedFont, setSelectedFont }) => {
           Sample Button
         </button>
       </div>
+      <div className="flex flex-row gap-4 justify-center">
+        {/* Logo Upload */}
+        <ImageUploader
+          label="Logo"
+          image={logo}
+          setImage={setLogo}
+          className="flex-1"
+        />
 
-      {/* Logo Upload */}
-      <div className="space-y-4">
-        <h2 className="text-lg font-medium">Logo</h2>
-        {logo ? (
-          <div className="relative ">
-            <img
-              src={logo}
-              alt="Uploaded Preview"
-              className="object-cover rounded-lg w-auto h-36 "
-            />
-            <button
-              onClick={handleClearImage}
-              className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full"
-            >
-              Remove
-            </button>
-          </div>
-        ) : (
-          <div
-            {...getRootProps()}
-            className={`flex justify-center items-center p-6 border-2 rounded-lg transition ${
-              isDragActive ? "border-blue-500 bg-blue-50" : "border-gray-300"
-            }`}
-          >
-            <input {...getInputProps()} />
-            <div className="text-center">
-              <Upload className="mx-auto h-12 w-12 text-gray-400" />
-              <p className="text-sm text-gray-600">
-                Drag and drop your logo here or{" "}
-                <span className="text-blue-500 cursor-pointer">
-                  browse files
-                </span>
-              </p>
-              <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
-            </div>
-          </div>
-        )}
+        {/* Background Image Upload */}
+        <ImageUploader
+          label="Background Image"
+          image={backgroundImage}
+          setImage={setBackgroundImage}
+          className="flex-1"
+        />
       </div>
-      {/* Background-Image */}
 
       {/* Font Selection */}
       <div className="mt-6 space-y-4">
