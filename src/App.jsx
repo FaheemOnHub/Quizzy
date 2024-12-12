@@ -21,6 +21,7 @@ import LandingPage from "./Components/LandingPage.jsx";
 
 import CustomizeTab from "./Components/CustomizeTab.jsx";
 import CustomColorPicker from "./Components/trial.jsx";
+import PreviewPage from "./Components/Preview.jsx";
 function handelSettings() {
   Swal.fire({
     icon: "warning",
@@ -105,6 +106,7 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/customize" element={<CustomizeTab />} />
           <Route path="/test" element={<CustomColorPicker />} />
+          <Route path="/preview" element={<PreviewPage />} />
         </Routes>
       </div>
     </Router>
