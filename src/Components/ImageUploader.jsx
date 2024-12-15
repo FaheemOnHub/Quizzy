@@ -40,17 +40,25 @@ const ImageUploader = ({
     },
   });
 
-  const handleClearImage = () => setImage(null);
+  const handleClearImage = () => {
+    image === "logo"
+      ? setCustomization((prev) => ({ ...prev, logo: null }))
+      : setCustomization((prev) => ({
+          ...prev,
+          bgImage: null,
+        }));
+    setLogo(null);
+  };
 
   return (
     <div className="space-y-6">
       <span className="text-lg font-medium">{label}</span>
       {logo ? (
-        <div className="flex gap-4">
+        <div className="flex flex-row gap-4">
           <img
             src={logo}
             alt={`${label} Preview`}
-            className="object-cover rounded-lg w-auto h-36 "
+            className="object-cover rounded-lg max-w-full max-h-full overflow-hidden"
           />
           <div className="">
             <button

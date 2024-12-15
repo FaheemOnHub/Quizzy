@@ -12,6 +12,7 @@ const Sidebar = ({
       <div className="flex flex-col p-3 h-full overflow-auto ">
         {currenState === "customiseMode" ? (
           <CustomizeTab
+            setcurrenState={setcurrenState}
             customization={customization}
             setCustomization={setCustomization}
           />

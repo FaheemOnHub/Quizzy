@@ -5,6 +5,7 @@ import { ArrowLeft, Save, BookOpen } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import adjustColor from "@/lib/adjustColor";
+import getTextColor from "@/lib/getTextColor";
 const PreviewPage = ({
   currentState,
   setcurrentState,
@@ -17,7 +18,6 @@ const PreviewPage = ({
     bgColor,
     primaryTextColor,
     buttonsColor,
-    buttonTextColor,
     answerBackground,
     selectedFont,
   } = customization;
@@ -195,6 +195,11 @@ const PreviewPage = ({
               variant="outline"
               onClick={handlePrevious}
               disabled={currentQuestionIndex === 0}
+              style={{
+                fontFamily: selectedFont,
+                backgroundColor: buttonsColor,
+                color: getTextColor(buttonsColor),
+              }}
               className="bg-white/20 backdrop-blur-sm border-white/30 text-white hover:bg-white/30 text-2xl p-6"
             >
               ← Go Back
@@ -205,6 +210,11 @@ const PreviewPage = ({
             <Button
               onClick={handleNext}
               disabled={currentQuestionIndex === sampleQuestions.length - 1}
+              style={{
+                fontFamily: selectedFont,
+                backgroundColor: buttonsColor,
+                color: getTextColor(buttonsColor),
+              }}
               className="bg-primary/80 hover:bg-primary/90 backdrop-blur-sm text-2xl p-6"
               aria-label=""
             >

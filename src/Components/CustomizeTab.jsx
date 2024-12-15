@@ -2,11 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { Upload } from "lucide-react";
+import { Upload, BadgeX } from "lucide-react";
 import { HexColorPicker } from "react-colorful";
 import ImageUploader from "./ImageUploader";
 
 const CustomizeTab = ({
+  setcurrenState,
   selectedFont,
   setSelectedFont,
   customization,
@@ -93,11 +94,16 @@ const CustomizeTab = ({
   };
 
   return (
-    <div className="rounded-lg">
+    <div className="rounded-lg relative">
       <h1 className="text-2xl font-semibold mb-6 font-montserrat">
         Branding Options
       </h1>
-
+      <button
+        className="absolute top-1 right-1 "
+        onClick={() => setcurrenState("sidebar")}
+      >
+        <BadgeX />
+      </button>
       {/* Real-Time Preview */}
       {/* <div
         className="p-4 border rounded-lg mb-6"
@@ -171,12 +177,12 @@ const CustomizeTab = ({
       )}
 
       {/* Color Pickers */}
-      <div className="mt-6 grid grid-cols-2 gap-4">
+      <div className="mt-6 grid grid-cols-1 gap-4">
         {[
           { label: "Question Color", key: "primaryTextColor" },
           { label: "Answer Color", key: "answerBackground" },
           { label: "Button Color", key: "buttonsColor" },
-          { label: "Button Text Color", key: "buttonTextColor" },
+          { label: "Form Background", key: "bgColor" },
         ].map(({ label, key }) => (
           <div key={key}>
             <button
