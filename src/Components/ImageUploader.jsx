@@ -1,8 +1,15 @@
-import React from "react";
+import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Upload } from "lucide-react";
 import { Trash2 } from "lucide-react";
-const ImageUploader = ({ label, image, setImage, maxSizeMB = 10 }) => {
+const ImageUploader = ({
+  label,
+  image,
+
+  maxSizeMB = 10,
+  setCustomization,
+}) => {
+  const [logo, setLogo] = useState(null);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: { "image/*": [] },
     onDrop: (acceptedFiles) => {
@@ -18,7 +25,16 @@ const ImageUploader = ({ label, image, setImage, maxSizeMB = 10 }) => {
         }
 
         const reader = new FileReader();
-        reader.onload = (e) => setImage(e.target.result);
+        reader.onload = (e) => {
+          image === "logo"
+            ? setCustomization((prev) => ({ ...prev, logo: e.target.result }))
+            : setCustomization((prev) => ({
+                ...prev,
+                bgImage: e.target.result,
+              }));
+
+          setLogo(e.target.result);
+        };
         reader.readAsDataURL(file);
       }
     },
@@ -29,10 +45,10 @@ const ImageUploader = ({ label, image, setImage, maxSizeMB = 10 }) => {
   return (
     <div className="space-y-6">
       <span className="text-lg font-medium">{label}</span>
-      {image ? (
+      {logo ? (
         <div className="flex gap-4">
           <img
-            src={image}
+            src={logo}
             alt={`${label} Preview`}
             className="object-cover rounded-lg w-auto h-36 "
           />

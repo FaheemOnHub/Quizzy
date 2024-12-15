@@ -1,11 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowLeft, Save, BookOpen } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-
-const PreviewPage = ({ currentState, setcurrentState }) => {
+import adjustColor from "@/lib/adjustColor";
+const PreviewPage = ({
+  currentState,
+  setcurrentState,
+  customization,
+  setCustomization,
+}) => {
+  const {
+    logo,
+    bgImage,
+    bgColor,
+    primaryTextColor,
+    buttonsColor,
+    buttonTextColor,
+    answerBackground,
+    selectedFont,
+  } = customization;
+  useEffect(() => {
+    console.log(customization);
+  });
   const navigate = useNavigate();
   const { toast } = useToast();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -74,38 +92,22 @@ const PreviewPage = ({ currentState, setcurrentState }) => {
 
   return (
     <div
-      className="min-h-screen bg-cover bg-center bg-fixed transition-all duration-500 rounded-lg flex justify-center items-center border border-red-500"
+      className="min-h-screen relative bg-cover bg-center bg-fixed transition-all duration-500 rounded-lg flex justify-center items-center w-full "
       style={{
-        backgroundImage: `url(https://wallpaperaccess.com/full/2849664.jpg)`,
+        backgroundImage: `url(${bgImage})`,
+        backgroundColor: bgColor,
       }}
     >
-      {/* Preview Header */}
-      <div className="fixed top-0 left-0 right-0 bg-white/30 backdrop-blur-md border-b z-10">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <Button
-            variant="ghost"
-            // onClick={() => navigate("/")}
-            onClick={() => setcurrentState("quiz")}
-            className="flex items-center gap-2 hover:bg-white/20"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Editor
-          </Button>
-          <div className="flex items-center gap-4">
-            <Button
-              onClick={handleSave}
-              className="flex items-center gap-2 bg-primary/80 hover:bg-primary/90 backdrop-blur-sm"
-            >
-              <Save className="h-4 w-4" />
-              Save Quiz
-            </Button>
-          </div>
-        </div>
-      </div>
-
+      {logo && (
+        <img
+          src={logo}
+          alt="Quiz Logo"
+          className="absolute top-5 left-5 h-20 w-20 object-contain"
+        />
+      )}
       {/* Preview Content */}
       <div className="pt-20 pb-8 px-4">
-        <div className="">
+        <div className="relative">
           <div className="mb-4">
             <span className="text-3xl font-medium text-white/80 ">
               <BookOpen className="inline" /> {currentQuestionIndex + 1} of{" "}
@@ -113,7 +115,10 @@ const PreviewPage = ({ currentState, setcurrentState }) => {
             </span>
           </div>
 
-          <h2 className="text-4xl font-normal mb-4 text-white">
+          <h2
+            className="text-4xl font-normal mb-4 text-white"
+            style={{ fontFamily: `${selectedFont}`, color: primaryTextColor }}
+          >
             {currentQuestion.question}
           </h2>
 
@@ -152,9 +157,30 @@ const PreviewPage = ({ currentState, setcurrentState }) => {
             ) : (
               <div className="inline-flex flex-col space-y-6">
                 {currentQuestion.options.map((option, index) => (
+                  // <div
+                  //   key={index}
+                  //   style={{
+                  //     fontFamily: `${selectedFont}`,
+                  //     color: answerBackground,
+                  //   }}
+                  //   className={`px-6 py-2 rounded-lg border border-white/30 bg-white/10  backdrop-blur-sm hover:bg-white/30 transition-colors duration-200 w-full  `}
+                  // >
+                  //   {option}
+                  // </div>
                   <div
                     key={index}
-                    className=" px-6 py-2 rounded-lg border border-white/30 bg-white/10 text-white backdrop-blur-sm hover:bg-white/30 transition-colors duration-200 w-full "
+                    style={{
+                      fontFamily: selectedFont,
+                      color: answerBackground,
+                      borderColor: adjustColor(answerBackground, -30), // Darker border
+                      boxShadow: `0px 4px 6px ${adjustColor(
+                        answerBackground,
+                        -50
+                      )}`, // Subtle shadow
+                      backgroundColor: "rgba(255, 255, 255, 0.2)", // Frosted glass
+                    }}
+                    className={`px-6 py-2 rounded-lg border transition-all duration-200 
+                              backdrop-blur-sm hover:bg-opacity-30 hover:scale-105`}
                   >
                     {option}
                   </div>

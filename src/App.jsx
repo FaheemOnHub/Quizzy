@@ -22,6 +22,7 @@ import LandingPage from "./Components/LandingPage.jsx";
 import CustomizeTab from "./Components/CustomizeTab.jsx";
 import CustomColorPicker from "./Components/trial.jsx";
 import PreviewPage from "./Components/Preview.jsx";
+import QuestionFormv2 from "./Components/QuestionFormv2.jsx";
 function handelSettings() {
   Swal.fire({
     icon: "warning",
@@ -107,6 +108,7 @@ const App = () => {
           <Route path="/customize" element={<CustomizeTab />} />
           <Route path="/test" element={<CustomColorPicker />} />
           <Route path="/preview" element={<PreviewPage />} />
+          <Route path="/interface2" element={<QuestionFormv2 />} />
         </Routes>
       </div>
     </Router>
