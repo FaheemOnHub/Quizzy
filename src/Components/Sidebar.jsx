@@ -8,8 +8,8 @@ const Sidebar = ({
   setCustomization,
 }) => {
   return (
-    <div className="flex overflow-hidden flex-shrink-0 duration-200 bg-gray-50 border-x-[0.5px] border-gray-300 w-[226px] lg:w-[300px] ">
-      <div className="flex flex-col p-3 h-full overflow-auto ">
+    <div className="flex  flex-shrink-0 duration-200 bg-gray-50 border-x-[0.5px] border-gray-300 w-[226px] lg:w-[280px] ">
+      <div className="flex flex-col p-3 h-screen  overflow-y-scroll">
         {currenState === "customiseMode" ? (
           <CustomizeTab
             setcurrenState={setcurrenState}

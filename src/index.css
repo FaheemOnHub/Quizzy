@@ -1,6 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.placeholder:empty::before {
+  content: attr(data-placeholder); /* Display the placeholder */
+
+  pointer-events: none; /* Prevent user interaction with the placeholder */
+  border: none;
+}
 
 .nav-links li {
   display: flex;

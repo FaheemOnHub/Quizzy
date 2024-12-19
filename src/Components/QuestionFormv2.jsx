@@ -56,7 +56,7 @@ const QuestionFormv2 = () => {
           </div>
         </div>
       </div>
-      <main className="max-h-[100vh-60px] relative ">
+      <main className="min-h-screen relative ">
         <div className="flex flex-row">
           <Sidebar
             currenState={currenState}

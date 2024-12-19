@@ -6,12 +6,46 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import adjustColor from "@/lib/adjustColor";
 import getTextColor from "@/lib/getTextColor";
+import MultipleChoicePage from "./MultipleChoicePage";
+import ContactInfoPage from "./ContactInfoPage";
 const PreviewPage = ({
   currentState,
   setcurrentState,
   customization,
   setCustomization,
 }) => {
+  const [formData, setformData] = useState([
+    {
+      type: "multipleChoice",
+      data: {
+        question: "What is React?",
+        options: ["Library", "Framework", "Language", "None"],
+        correctAnswer: 0,
+      },
+    },
+    {
+      type: "contactUs",
+      data: {
+        heading: "Contact Us",
+        description: "Provide your contact details below.",
+      },
+    },
+    {
+      type: "dropdown",
+      data: {
+        question: "Choose your favorite color",
+        options: ["Red", "Blue", "Green"],
+      },
+    },
+    {
+      type: "multipleChoice",
+      data: {
+        question: "What is Angular?",
+        options: ["Library", "Framework", "Language", "None"],
+        correctAnswer: 0,
+      },
+    },
+  ]);
   const {
     logo,
     bgImage,
@@ -36,50 +70,10 @@ const PreviewPage = ({
     navigate("/");
   };
 
-  // Sample questions with images for demonstration
-  const sampleQuestions = [
-    {
-      id: 1,
-      type: "image",
-      question: "What programming language is represented by this logo?",
-      imageUrl: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7",
-      options: ["JavaScript", "Python", "Java", "Ruby"],
-      backgroundImage:
-        "https://images.unsplash.com/photo-1721322800607-8c38375eef04",
-    },
-    {
-      id: 2,
-      type: "text",
-      question: "Which of these is a front-end framework?",
-      options: ["React", "Express", "Django", "Flask"],
-      backgroundImage:
-        "https://images.unsplash.com/photo-1472396961693-142e6e269027",
-    },
-    {
-      id: 3,
-      type: "image-options",
-      question: "Which image represents a proper coding setup?",
-      options: [
-        {
-          text: "Setup A",
-          imageUrl:
-            "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
-        },
-        {
-          text: "Setup B",
-          imageUrl:
-            "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-        },
-      ],
-      backgroundImage:
-        "https://images.unsplash.com/photo-1466721591366-2d5fba72006d",
-    },
-  ];
-
-  const currentQuestion = sampleQuestions[currentQuestionIndex];
+  const currentQuestion = formData[currentQuestionIndex];
 
   const handleNext = () => {
-    if (currentQuestionIndex < sampleQuestions.length - 1) {
+    if (currentQuestionIndex < formData.length - 1) {
       setCurrentQuestionIndex((prev) => prev + 1);
     }
   };
@@ -92,7 +86,7 @@ const PreviewPage = ({
 
   return (
     <div
-      className="min-h-screen relative bg-cover bg-center bg-fixed transition-all duration-500 rounded-lg flex justify-center items-center w-full "
+      className="min-h-screen relative bg-cover bg-center bg-fixed transition-all duration-500 rounded-lg flex justify-center   w-full "
       style={{
         backgroundImage: `url(${bgImage})`,
         backgroundColor: bgColor,
@@ -106,24 +100,43 @@ const PreviewPage = ({
         />
       )}
       {/* Preview Content */}
-      <div className="pt-20 pb-8 px-4">
+      <div className="pt-40 pb-8 mr-96">
         <div className="relative">
-          <div className="mb-4">
+          {currentQuestion.type === "multipleChoice" && (
+            <MultipleChoicePage
+              data={currentQuestion.data}
+              customization={customization}
+              // onUpdate={(updatedData) =>
+              //   updatePageData(currentQuestionIndex, updatedData)
+              // }
+            />
+          )}
+          {currentQuestion.type === "contactUs" && (
+            <ContactInfoPage
+              data={currentQuestion.data}
+              customization={customization}
+              // onUpdate={(updatedData) =>
+              //   updatePageData(currentQuestionIndex, updatedData)
+              // }
+            />
+          )}
+
+          {/* <div className="mb-4">
             <span className="text-3xl font-medium text-white/80 ">
               <BookOpen className="inline" /> {currentQuestionIndex + 1} of{" "}
               {sampleQuestions.length}
             </span>
-          </div>
+          </div> */}
 
-          <h2
+          {/* <h2
             className="text-4xl font-normal mb-4 text-white"
             style={{ fontFamily: `${selectedFont}`, color: primaryTextColor }}
           >
             {currentQuestion.question}
-          </h2>
-
+          </h2> */}
+          {/* <MultipleChoicePage questionData={sampleQuestions} /> */}
           {/* Question Image */}
-          {currentQuestion.type === "image" && currentQuestion.imageUrl && (
+          {/* {currentQuestion.type === "image" && currentQuestion.imageUrl && (
             <div className="mb-6">
               <img
                 src={currentQuestion.imageUrl}
@@ -132,10 +145,10 @@ const PreviewPage = ({
                 className=" max-h-64 p-4 rounded-lg border border-white/30 hover:bg-white/30 cursor-pointer transition-colors duration-200 bg-white/10 backdrop-blur-sm"
               />
             </div>
-          )}
+          )} */}
 
           {/* Options */}
-          <div className="space-y-3 ">
+          {/* <div className="space-y-3 ">
             {currentQuestion.type === "image-options" ? (
               <div className="grid grid-cols-2 gap-4">
                 {currentQuestion.options.map((option, optionIndex) => (
@@ -157,16 +170,6 @@ const PreviewPage = ({
             ) : (
               <div className="inline-flex flex-col space-y-6">
                 {currentQuestion.options.map((option, index) => (
-                  // <div
-                  //   key={index}
-                  //   style={{
-                  //     fontFamily: `${selectedFont}`,
-                  //     color: answerBackground,
-                  //   }}
-                  //   className={`px-6 py-2 rounded-lg border border-white/30 bg-white/10  backdrop-blur-sm hover:bg-white/30 transition-colors duration-200 w-full  `}
-                  // >
-                  //   {option}
-                  // </div>
                   <div
                     key={index}
                     style={{
@@ -187,10 +190,10 @@ const PreviewPage = ({
                 ))}
               </div>
             )}
-          </div>
+          </div> */}
 
           {/* Question Navigation */}
-          <div className="flex justify-between items-center pt-4">
+          <div className="flex justify-between items-center pt-4 gap-64">
             <Button
               variant="outline"
               onClick={handlePrevious}
@@ -200,16 +203,14 @@ const PreviewPage = ({
                 backgroundColor: buttonsColor,
                 color: getTextColor(buttonsColor),
               }}
-              className="bg-white/20 backdrop-blur-sm border-white/30 text-white hover:bg-white/30 text-2xl p-6"
+              className="bg-white/20 backdrop-blur-sm border-white/30 text-white hover:bg-white/30 text-xl p-6"
             >
               ← Go Back
             </Button>
-            {/* <span className="text-sm text-white font-medium">
-              {currentQuestionIndex + 1} of {sampleQuestions.length}
-            </span> */}
+
             <Button
               onClick={handleNext}
-              disabled={currentQuestionIndex === sampleQuestions.length - 1}
+              disabled={currentQuestionIndex === formData.length - 1}
               style={{
                 fontFamily: selectedFont,
                 backgroundColor: buttonsColor,
