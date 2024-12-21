@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
+
 import countries from "@/lib/countries";
-import Select from "react-select";
+
 const ContactInfoPage = ({ customization }) => {
   const { selectedFont, primaryTextColor, answerBackground, bgColor } =
     customization;

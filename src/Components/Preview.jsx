@@ -8,6 +8,7 @@ import adjustColor from "@/lib/adjustColor";
 import getTextColor from "@/lib/getTextColor";
 import MultipleChoicePage from "./MultipleChoicePage";
 import ContactInfoPage from "./ContactInfoPage";
+import TextInput from "./TextInput";
 const PreviewPage = ({
   currentState,
   setcurrentState,
@@ -31,7 +32,7 @@ const PreviewPage = ({
       },
     },
     {
-      type: "dropdown",
+      type: "textInput",
       data: {
         question: "Choose your favorite color",
         options: ["Red", "Blue", "Green"],
@@ -86,7 +87,7 @@ const PreviewPage = ({
 
   return (
     <div
-      className="min-h-screen relative bg-cover bg-center bg-fixed transition-all duration-500 rounded-lg flex justify-center   w-full "
+      className="min-h-screen relative bg-cover bg-center bg-fixed transition-all duration-500 rounded-lg flex justify-center items-center w-full "
       style={{
         backgroundImage: `url(${bgImage})`,
         backgroundColor: bgColor,
@@ -100,8 +101,8 @@ const PreviewPage = ({
         />
       )}
       {/* Preview Content */}
-      <div className="pt-40 pb-8 mr-96">
-        <div className="relative">
+      <div className="pt-40 pb-8 mr-96 pl-8">
+        <div className="">
           {currentQuestion.type === "multipleChoice" && (
             <MultipleChoicePage
               data={currentQuestion.data}
@@ -120,77 +121,12 @@ const PreviewPage = ({
               // }
             />
           )}
-
-          {/* <div className="mb-4">
-            <span className="text-3xl font-medium text-white/80 ">
-              <BookOpen className="inline" /> {currentQuestionIndex + 1} of{" "}
-              {sampleQuestions.length}
-            </span>
-          </div> */}
-
-          {/* <h2
-            className="text-4xl font-normal mb-4 text-white"
-            style={{ fontFamily: `${selectedFont}`, color: primaryTextColor }}
-          >
-            {currentQuestion.question}
-          </h2> */}
-          {/* <MultipleChoicePage questionData={sampleQuestions} /> */}
-          {/* Question Image */}
-          {/* {currentQuestion.type === "image" && currentQuestion.imageUrl && (
-            <div className="mb-6">
-              <img
-                src={currentQuestion.imageUrl}
-                alt="Question"
-                // className="rounded-lg max-h-64 object-contain max-w-full"
-                className=" max-h-64 p-4 rounded-lg border border-white/30 hover:bg-white/30 cursor-pointer transition-colors duration-200 bg-white/10 backdrop-blur-sm"
-              />
-            </div>
-          )} */}
-
-          {/* Options */}
-          {/* <div className="space-y-3 ">
-            {currentQuestion.type === "image-options" ? (
-              <div className="grid grid-cols-2 gap-4">
-                {currentQuestion.options.map((option, optionIndex) => (
-                  <div
-                    key={optionIndex}
-                    className=" p-4 rounded-lg border border-white/30 hover:bg-white/30 cursor-pointer transition-colors duration-200 bg-white/10 backdrop-blur-sm"
-                  >
-                    <img
-                      src={option.imageUrl}
-                      alt={option.text}
-                      className="rounded-lg w-full h-32 object-cover mb-2"
-                    />
-                    <p className="text-center font-medium text-white">
-                      {option.text}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="inline-flex flex-col space-y-6">
-                {currentQuestion.options.map((option, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      fontFamily: selectedFont,
-                      color: answerBackground,
-                      borderColor: adjustColor(answerBackground, -30), // Darker border
-                      boxShadow: `0px 4px 6px ${adjustColor(
-                        answerBackground,
-                        -50
-                      )}`, // Subtle shadow
-                      backgroundColor: "rgba(255, 255, 255, 0.2)", // Frosted glass
-                    }}
-                    className={`px-6 py-2 rounded-lg border transition-all duration-200 
-                              backdrop-blur-sm hover:bg-opacity-30 hover:scale-105`}
-                  >
-                    {option}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div> */}
+          {currentQuestion.type === "textInput" && (
+            <TextInput
+              customization={customization}
+              placeholder={"Type your answer here"}
+            />
+          )}
 
           {/* Question Navigation */}
           <div className="flex justify-between items-center pt-4 gap-64">
